@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.widget.*
@@ -15,6 +16,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var firebaseDatabase: FirebaseDatabase
     lateinit var messageDatabaseReference: DatabaseReference
     private var childEventListener: ChildEventListener? = null
+    lateinit var firebaceRemoteConfig: FirebaseRemoteConfig
 
     lateinit var mMessageAdapter: MessageAdapter
     lateinit var mUsername: String
@@ -42,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseDatabase = FirebaseDatabase.getInstance()
         firebaseStorage = FirebaseStorage.getInstance()
+        firebaceRemoteConfig = FirebaseRemoteConfig.getInstance()
         messageDatabaseReference = firebaseDatabase.reference.child("messages")
         chatStorageReference = firebaseStorage.reference.child("chat_photos")
 
@@ -118,6 +123,32 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+
+        val configSettings = FirebaseRemoteConfigSettings.Builder().build()
+        firebaceRemoteConfig.setConfigSettingsAsync(configSettings)
+        val defaultConfigMap = mapOf(
+            FRIENDLY_MSG_LENGTH_KEY to DEFAULT_MSG_LENGTH_LIMIT
+        )
+        firebaceRemoteConfig.setDefaultsAsync(defaultConfigMap)
+        fetchConfig()
+    }
+
+    private fun fetchConfig() {
+        val catcheExpiration = 3600L
+        firebaceRemoteConfig.fetch(catcheExpiration)
+        .addOnSuccessListener {
+            firebaceRemoteConfig.fetchAndActivate()
+            applyRetrievedLengthLimit()
+        }.addOnFailureListener {
+            Log.w(TAG, "Error fetching config", it)
+            applyRetrievedLengthLimit()
+        }
+    }
+
+    private fun applyRetrievedLengthLimit() {
+        val freindly_msg_length = firebaceRemoteConfig.getLong(FRIENDLY_MSG_LENGTH_KEY)
+        messageEditText.filters = arrayOf( InputFilter.LengthFilter(freindly_msg_length.toInt()) )
+        Log.d(TAG, "$FRIENDLY_MSG_LENGTH_KEY = $freindly_msg_length")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -133,8 +164,8 @@ class MainActivity : AppCompatActivity() {
             data?.data?.let { selectedImageUri ->
                 selectedImageUri.lastPathSegment?.let {
                     val photoRef = chatStorageReference.child(it)
-                    photoRef.putFile(selectedImageUri).addOnSuccessListener {
-                        val result: Task<Uri>? = it.metadata?.reference?.downloadUrl
+                    photoRef.putFile(selectedImageUri).addOnSuccessListener { taskSnapshot ->
+                        val result: Task<Uri>? = taskSnapshot.metadata?.reference?.downloadUrl
                         result?.addOnSuccessListener { uri ->
                             //UploadTask.TaskSnapshot
                             val friendlyMessage = FriendlyMessage(null, mUsername, uri.toString())
@@ -204,6 +235,7 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
         const val ANONYMOUS = "anonymous"
         const val DEFAULT_MSG_LENGTH_LIMIT = 1000
+        const val FRIENDLY_MSG_LENGTH_KEY = "friendly_msg_length"
         const val RC_SIGN_IN = 1
         const val RC_PHOTO_PICKER = 2
     }
