@@ -1,5 +1,7 @@
 package com.gls.ownchatapp
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -8,27 +10,40 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var firebaseDatabase: FirebaseDatabase
     lateinit var messageDatabaseReference: DatabaseReference
-    lateinit var childEventListener: ChildEventListener
+    private var childEventListener: ChildEventListener? = null
 
     lateinit var mMessageAdapter: MessageAdapter
     lateinit var mUsername: String
+    lateinit var firebaseAuth: FirebaseAuth
+    private var authStateListener: FirebaseAuth.AuthStateListener? = null
+    lateinit var firebaseStorage: FirebaseStorage
+    lateinit var chatStorageReference: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mUsername = ANONYMOUS
         FirebaseApp.initializeApp(this)
+        firebaseAuth = FirebaseAuth.getInstance()
         firebaseDatabase = FirebaseDatabase.getInstance()
+        firebaseStorage = FirebaseStorage.getInstance()
         messageDatabaseReference = firebaseDatabase.reference.child("messages")
+        chatStorageReference = firebaseStorage.reference.child("chat_photos")
 
         // Initialize message ListView and its adapter
         val friendlyMessages: List<FriendlyMessage> = ArrayList<FriendlyMessage>()
@@ -40,8 +55,15 @@ class MainActivity : AppCompatActivity() {
 
         // ImagePickerButton shows an image picker to upload a image for a message
         photoPickerButton.setOnClickListener {
-            // TODO: Fire an intent to show an image picker
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/jpeg"
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+            startActivityForResult(
+                Intent.createChooser(intent, "Complete action using"),
+                RC_PHOTO_PICKER
+            )
         }
+
 
         // Enable Send button when there's text to send
         messageEditText.addTextChangedListener(object : TextWatcher {
@@ -66,29 +88,110 @@ class MainActivity : AppCompatActivity() {
             messageEditText.setText("")
         }
 
-        childEventListener = object: ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val friendlyMessage = snapshot.getValue(FriendlyMessage::class.java)
-                mMessageAdapter.add(friendlyMessage)
-            }
+        logoutBtn.setOnClickListener {
+            AuthUI.getInstance().signOut(this)
+        }
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
+        authStateListener = FirebaseAuth.AuthStateListener {
+            // onAuthStateChanged here...
+            val user = it.currentUser
+            if (user != null) {
+                // user is signed in
+                onSignedInInitialize(user.displayName)
+                Toast.makeText(this, getString(R.string.signed_in_message), Toast.LENGTH_SHORT).show()
+            } else {
+                // user is signed out
+                onSignedOutCleanup()
+                startActivityForResult(
+                    AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false) // remember user's creadentials or not
+                        .setAvailableProviders(
+                            listOf(
+                                AuthUI.IdpConfig.GoogleBuilder().build(),
+                                AuthUI.IdpConfig.EmailBuilder().build(),
+                                //AnonymousBuilder().build()
+                            )
+                        )
+                        .build(),
+                    RC_SIGN_IN
+                )
             }
         }
-        messageDatabaseReference.addChildEventListener(childEventListener)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show()
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "Sign in canceled!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        } else if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
+            data?.data?.let { selectedImageUri ->
+                selectedImageUri.lastPathSegment?.let {
+                    val photoRef = chatStorageReference.child(it)
+                    photoRef.putFile(selectedImageUri).addOnSuccessListener {
+                        val result: Task<Uri>? = it.metadata?.reference?.downloadUrl
+                        result?.addOnSuccessListener { uri ->
+                            //UploadTask.TaskSnapshot
+                            val friendlyMessage = FriendlyMessage(null, mUsername, uri.toString())
+                            messageDatabaseReference.push().setValue(friendlyMessage)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onSignedInInitialize(userName: String?) {
+        userName?.let { mUsername = userName }
+        attachDatabaseReadListener()
+    }
+
+    private fun attachDatabaseReadListener() {
+        if (childEventListener == null) {
+            childEventListener = object: ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    val friendlyMessage = snapshot.getValue(FriendlyMessage::class.java)
+                    mMessageAdapter.add(friendlyMessage)
+                }
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+                override fun onChildRemoved(snapshot: DataSnapshot) {}
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+                override fun onCancelled(error: DatabaseError) {}
+            }
+            messageDatabaseReference.addChildEventListener(childEventListener!!)
+        }
+    }
+
+    private fun detachDatabaseReadListener() {
+        childEventListener?.let {
+            messageDatabaseReference.removeEventListener(it)
+            childEventListener = null
+        }
+    }
+
+    private fun onSignedOutCleanup() {
+        mUsername = ANONYMOUS
+        mMessageAdapter.clear()
+        detachDatabaseReadListener()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        firebaseAuth.addAuthStateListener(authStateListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (authStateListener != null) {
+            firebaseAuth.removeAuthStateListener(authStateListener)
+        }
+        detachDatabaseReadListener()
+        mMessageAdapter.clear()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -101,5 +204,7 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
         const val ANONYMOUS = "anonymous"
         const val DEFAULT_MSG_LENGTH_LIMIT = 1000
+        const val RC_SIGN_IN = 1
+        const val RC_PHOTO_PICKER = 2
     }
 }
