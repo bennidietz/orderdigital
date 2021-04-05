@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String mUsername;
 
+    private Fireb mFIrebaseDatabase;
+    private DatabaseReference
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
