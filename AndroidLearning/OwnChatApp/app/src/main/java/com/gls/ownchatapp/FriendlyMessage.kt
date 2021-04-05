@@ -15,4 +15,6 @@
  */
 package com.gls.ownchatapp
 
-class FriendlyMessage (val text: String, val name: String, val photoUrl: String?)
+class FriendlyMessage (val text: String?, val name: String?, val photoUrl: String?) {
+    constructor() : this(null,null,null) {}
+}

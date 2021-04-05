@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.firebase.udacity.friendlychat;
+package com.bd.firebase.udacity.friendlychat;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String mUsername;
 
-    private Fireb mFIrebaseDatabase;
+    private  Fireb mFIrebaseDatabase;
     private DatabaseReference
 
     @Override

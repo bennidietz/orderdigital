@@ -9,8 +9,7 @@ import android.view.MenuInflater
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -18,8 +17,9 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var firebaseDatabase: FirebaseDatabase
     lateinit var messageDatabaseReference: DatabaseReference
+    lateinit var childEventListener: ChildEventListener
 
-    private var mMessageAdapter: MessageAdapter? = null
+    lateinit var mMessageAdapter: MessageAdapter
     lateinit var mUsername: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +65,30 @@ class MainActivity : AppCompatActivity() {
             // Clear input box
             messageEditText.setText("")
         }
+
+        childEventListener = object: ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val friendlyMessage = snapshot.getValue(FriendlyMessage::class.java)
+                mMessageAdapter.add(friendlyMessage)
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        }
+        messageDatabaseReference.addChildEventListener(childEventListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
