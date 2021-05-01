@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Models\Forum;
+use App\Models\Models\Question;
 use Illuminate\Http\Request;
 
-class ForumController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ForumController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Models\Forum  $forum
+     * @param  \App\Models\Models\Question  $Question
      * @return \Illuminate\Http\Response
      */
-    public function show(Forum $forum)
+    public function show(Question $Question)
     {
         //
     }
@@ -52,10 +52,10 @@ class ForumController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Models\Forum  $forum
+     * @param  \App\Models\Models\Question  $Question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Forum $forum)
+    public function edit(Question $Question)
     {
         //
     }
@@ -64,10 +64,10 @@ class ForumController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\Forum  $forum
+     * @param  \App\Models\Models\Question  $Question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Forum $forum)
+    public function update(Request $request, Question $Question)
     {
         //
     }
@@ -75,10 +75,10 @@ class ForumController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Models\Forum  $forum
+     * @param  \App\Models\Models\Question  $Question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Forum $forum)
+    public function destroy(Question $Question)
     {
         //
     }

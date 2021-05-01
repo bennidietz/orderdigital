@@ -21,13 +21,14 @@ class CreateOpportunitiesTable extends Migration
             $table->unsignedSmallInteger('country_id');
             $table->timestamp('deadline');
             $table->string('organizer');
-            $table->unsignedInteger('created_by'); // comes from the user
+            $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });
+
         Schema::table('opportunities', function(Blueprint $table) {
-            $table->foreign('category_id')->reference('id')->on('categories');
-            $table->foreign('country_id')->reference('id')->on('countries');
-            $table->foreign('created_by')->reference('id')->on('users');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 
