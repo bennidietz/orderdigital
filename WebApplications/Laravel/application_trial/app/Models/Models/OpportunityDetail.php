@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class OpportunityDetail extends Model
 {
     use HasFactory;
+
+    public function opportunity() {
+        return $this->hasOne(OpportunityDetail::class);
+    }
 }

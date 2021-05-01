@@ -27,7 +27,8 @@ class CreateOpportunityDetailsTable extends Migration
             $table->timestamps();
         });
         Schema::table('opportunity_details', function(Blueprint $table) {
-            $table->foreign('opportunity_id')->references('id')->on('opportunities');
+            $table->foreign('opportunity_id')->references('id')->on('opportunities')
+                ->onDelete('cascade');
         });
     }
 
