@@ -15,7 +15,19 @@ class CreateOpportunitiesTable extends Migration
     {
         Schema::create('opportunities', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->unsignedTinyInteger('category_id'); // related type for tinyIncrements
+            $table->unsignedSmallInteger('country_id');
+            $table->timestamp('deadline');
+            $table->string('organizer');
+            $table->unsignedInteger('created_by'); // comes from the user
             $table->timestamps();
+        });
+        Schema::table('opportunities', function(Blueprint $table) {
+            $table->foreign('category_id')->reference('id')->on('categories');
+            $table->foreign('country_id')->reference('id')->on('countries');
+            $table->foreign('created_by')->reference('id')->on('users');
         });
     }
 
