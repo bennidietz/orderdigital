@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function register(Request  $request) {
+    public function register(Request $request) {
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -19,10 +21,29 @@ class AuthController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
         $user->save();
 
-        // Token
+        return $this->getResponse($user);
+    }
+
+    public function login(Request $request) {
+        $validatedData = $request->validate([
+            'email' => 'required|email:rfc|string|max:255',
+            'password' => 'required|string|max:255',
+        ]);
+
+        $credentials = \request(['email', 'password']);
+
+        if (Auth::attempt($credentials)) {
+            $user = $request->user();
+            return $this->getResponse($user);
+        } else {
+            return response(["error" => "error"], 400);
+        }
+    }
+
+    private function getResponse(User $user) {
         $token = $user->createToken('Personal Access Token');
         $token->token->expires_at = Carbon::now()->addWeek(1);
         $token->token->save();
