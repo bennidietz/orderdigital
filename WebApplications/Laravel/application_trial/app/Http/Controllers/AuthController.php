@@ -43,6 +43,15 @@ class AuthController extends Controller
         }
     }
 
+    public function logout(Request $request) {
+        $request->user()->token()->revoke();
+        return response('Successfully logged out');
+    }
+
+    public function user(Request $request) {
+        return $request->user();
+    }
+
     private function getResponse(User $user) {
         $token = $user->createToken('Personal Access Token');
         $token->token->expires_at = Carbon::now()->addWeek(1);
