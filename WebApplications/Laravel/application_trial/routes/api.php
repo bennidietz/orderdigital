@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OpportunityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,7 @@ Route::prefix('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
     Route::get('user', [AuthController::class, 'user'])->middleware('auth:api');
 });
+
+// API Resources
+
+Route::get('opportunities', [OpportunityController::class, 'index']);
