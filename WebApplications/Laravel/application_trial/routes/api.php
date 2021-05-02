@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/test', function (Request $request) {
     return "This is the API part of Laravel";
+});
+
+Route::prefix('auth')->group(function () {
+    // api/auth/register
+    Route::post('/register', [AuthController::class, 'register']);
 });
