@@ -9,5 +9,9 @@ class Category extends Model
 {
     use HasFactory;
 
-    public $timestemp = false;
+    public $timestamps = false;
+
+    protected $fillable = [
+        'name'
+    ];
 }

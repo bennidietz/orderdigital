@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OpportunityStore;
 use App\Http\Resources\OpportunityCollection;
 use App\Models\Models\Opportunity;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ class OpportunityController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return OpportunityCollection
      */
     public function index()
     {
@@ -34,20 +35,24 @@ class OpportunityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OpportunityStore $request)
     {
-        //
+//        $validator = $request->validate([
+//           'title' => 'required|string|max:255',
+//           'description' => 'required',
+//        ]);
+        return "Testing data";
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Models\Opportunity  $opportunity
-     * @return \Illuminate\Http\Response
+     * @return Opportunity
      */
     public function show(Opportunity $opportunity)
     {
-        //
+        return $opportunity;
     }
 
     /**

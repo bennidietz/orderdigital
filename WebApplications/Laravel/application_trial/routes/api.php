@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\OpportunityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,8 +32,13 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
     Route::get('user', [AuthController::class, 'user'])->middleware('auth:api');
+    Route::get('authentication-failed', [AuthController::class, 'authFailed'])->name('auth-failed');
 });
 
 // API Resources
+Route::resource('opportunity', OpportunityController::class);
 
-Route::get('opportunities', [OpportunityController::class, 'index']);
+Route::group(['prefix' => 'lookups', 'middleware' => 'auth:api'], function () {
+    Route::resource('category', CategoryController::class);
+    Route::resource('country', CountryController::class);
+});
