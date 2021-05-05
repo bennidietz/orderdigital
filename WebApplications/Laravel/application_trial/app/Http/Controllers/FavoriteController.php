@@ -2,81 +2,74 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FavoriteCollection;
 use App\Models\Models\Favorite;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class FavoriteController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return FavoriteCollection
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new FavoriteCollection(Favorite::all());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Application|ResponseFactory|Response|void
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|numeric',
+            'opportunity_id' => 'required|numeric',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Models\Favorite  $favorite
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Favorite $favorite)
-    {
-        //
-    }
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Models\Favorite  $favorite
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Favorite $favorite)
-    {
-        //
+        return Favorite::create($request->all());
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\Favorite  $favorite
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Favorite $favorite
+     * @return Favorite|Application|ResponseFactory|Response
      */
     public function update(Request $request, Favorite $favorite)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'numeric',
+            'opportunity_id' => 'numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+
+        $favorite->update($request->all());
+
+        return $favorite;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Models\Favorite  $favorite
-     * @return \Illuminate\Http\Response
+     * @param Favorite $favorite
+     * @return Response
      */
     public function destroy(Favorite $favorite)
     {
