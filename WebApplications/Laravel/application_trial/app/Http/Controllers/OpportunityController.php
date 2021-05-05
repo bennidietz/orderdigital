@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OpportunityStore;
 use App\Http\Resources\OpportunityCollection;
+use App\Http\Resources\Opportunity as OpportunityResource;
 use App\Models\Models\Opportunity;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class OpportunityController extends Controller
 {
@@ -20,69 +25,59 @@ class OpportunityController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(OpportunityStore $request)
     {
-//        $validator = $request->validate([
-//           'title' => 'required|string|max:255',
-//           'description' => 'required',
-//        ]);
-        return "Testing data";
+        return Opportunity::create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Models\Opportunity  $opportunity
-     * @return Opportunity
+     * @param Opportunity $opportunity
+     * @return OpportunityResource
      */
     public function show(Opportunity $opportunity)
     {
-        return $opportunity;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Models\Opportunity  $opportunity
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Opportunity $opportunity)
-    {
-        //
+        return new OpportunityResource($opportunity);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\Opportunity  $opportunity
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Opportunity $opportunity
+     * @return Opportunity|Application|ResponseFactory|Response
      */
     public function update(Request $request, Opportunity $opportunity)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'string|max:255',
+            'category_id' => 'numeric',
+            'country_id' => 'numeric',
+            'deadline' => 'date',
+            'organizer' => 'string|max:255',
+            'created_by' => 'numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+
+        $opportunity->update($request->all());
+
+        return $opportunity;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Models\Opportunity  $opportunity
-     * @return \Illuminate\Http\Response
+     * @param Opportunity $opportunity
+     * @return Response
      */
     public function destroy(Opportunity $opportunity)
     {

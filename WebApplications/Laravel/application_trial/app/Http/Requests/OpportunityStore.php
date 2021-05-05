@@ -28,7 +28,11 @@ class OpportunityStore extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'required',
-            'deadline' => 'required|datetime'
+            'category_id' => 'required|numeric',
+            'country_id' => 'required|numeric',
+            'deadline' => 'required|date',
+            'organizer' => 'required|string|max:255',
+            'created_by' => 'required|numeric ',
         ];
     }
 
