@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OpportunityController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,10 +37,25 @@ Route::prefix('auth')->group(function () {
     Route::get('authentication-failed', [AuthController::class, 'authFailed'])->name('auth-failed');
 });
 
-// API Resources
-Route::resource('opportunity', OpportunityController::class);
-
 Route::group(['prefix' => 'lookups', 'middleware' => 'auth:api'], function () {
     Route::resource('category', CategoryController::class);
     Route::resource('country', CountryController::class);
+});
+
+Route::group(['middleware' => 'auth:api'], function () {
+
+    // Opportunities
+    Route::resource('opportunity', OpportunityController::class);
+
+    // Questions
+    Route::get('questions', [QuestionController::class, 'index']);
+    Route::post('question', [QuestionController::class, 'store']);
+    Route::put('questions/{question}', [QuestionController::class, 'update']);
+
+    // Favorites
+    Route::get('favorites', [FavoriteController::class, 'index']);
+    Route::post('favorite', [FavoriteController::class, 'store']);
+    Route::put('favorites/{favorite}', [FavoriteController::class, 'update']);
+
+    //TODO: uplaod images for opportunities and forum
 });
