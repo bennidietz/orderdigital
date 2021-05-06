@@ -12,7 +12,7 @@ class _OpportunitiesPageState extends State<OpportunitiesPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Home Page",
+          "Opportunities Page",
         ),
       ),
     );
