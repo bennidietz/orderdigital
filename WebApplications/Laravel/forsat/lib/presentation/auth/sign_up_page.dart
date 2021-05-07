@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:forsat/network/models/sign_up_form_model.dart';
+import 'package:forsat/network/models/auth/sign_up_form_model.dart';
 import 'package:forsat/res/colors.dart';
-import 'package:forsat/res/images.dart';
 import 'package:forsat/router/router_constants.dart';
 import 'package:forsat/widgets/show_snackbar.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
@@ -18,10 +17,11 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       key: _key,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         elevation: 0.0,
         brightness: Brightness.light,
         automaticallyImplyLeading: false,
+        title: Text("Sign Up"),
+        centerTitle: true,
       ),
       body: Injector(
         inject: [Inject<SignUpFormModel>(() => SignUpFormModel())],
@@ -31,13 +31,6 @@ class _SignUpPageState extends State<SignUpPage> {
             padding: EdgeInsets.all(16),
             child: ListView(
               children: <Widget>[
-                Container(
-                  height: 100,
-                  child: Center(
-                    child: Image.asset(MyImages.logo_solid),
-                  ),
-                ),
-                buildSizedBox(20),
                 StateBuilder<SignUpFormModel>(
                   builder: (context, signUpFormModel) {
                     return TextFormField(
@@ -55,7 +48,33 @@ class _SignUpPageState extends State<SignUpPage> {
                           padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
                           child: Icon(Icons.person),
                         ),
-                        hintText: "Enter your first name",
+                        hintText: "First name",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                buildSizedBox(15),
+                StateBuilder<SignUpFormModel>(
+                  builder: (context, signUpFormModel) {
+                    return TextFormField(
+                      onChanged: (String lastName) {
+                        signUpFormModel.setState(
+                                (state) => state.setLastName(lastName),
+                            catchError: true
+                        );
+                      },
+                      decoration: InputDecoration(
+                        errorText: signUpFormModel.hasError
+                            ? signUpFormModel.error.message
+                            : null,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                          child: Icon(Icons.person),
+                        ),
+                        hintText: "Last name",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -81,7 +100,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
                           child: Icon(Icons.email),
                         ),
-                        hintText: "Enter your email",
+                        hintText: "My email",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -89,6 +108,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     );
                   },
                 ),
+                buildSizedBox(15),
                 StateBuilder<SignUpFormModel>(
                   builder: (_, signFormModel) {
                     return TextFormField(
@@ -105,7 +125,32 @@ class _SignUpPageState extends State<SignUpPage> {
                           padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
                           child: Icon(Icons.lock),
                         ),
-                        hintText: "Enter your password",
+                        hintText: "Password",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                      ),
+                    );
+                  },
+                ),
+                buildSizedBox(15),
+                StateBuilder<SignUpFormModel>(
+                  builder: (_, signFormModel) {
+                    return TextFormField(
+                      onChanged: (String validatedPassword) {
+                        signFormModel.setState((state)
+                        => state.confirmPassword(validatedPassword),
+                            catchError: true);
+                      },
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        errorText: signFormModel.hasError
+                            ? signFormModel.error.message
+                            : null,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                          child: Icon(Icons.lock),
+                        ),
+                        hintText: "Reenter your password",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30)),
                       ),
@@ -143,7 +188,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Text("Already have an account?"),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, signInRoute);
+                        Navigator.pushReplacementNamed(context, signInRoute);
                       },
                       child: Text(
                         "Sign In",

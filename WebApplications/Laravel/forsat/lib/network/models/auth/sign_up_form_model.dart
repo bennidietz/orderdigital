@@ -1,6 +1,9 @@
-import 'package:forsat/network/classes/common_error.dart';
+import 'package:forsat/network/classes/errors/common_error.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
 class SignUpFormModel {
+
+  //final AuthState _authState = Injector.get<AuthState>();
 
   String firstName;
   String lastName;
@@ -34,6 +37,14 @@ class SignUpFormModel {
     this.password = password;
   }
 
+  void confirmPassword(String validatedPassword) {
+    // valid email
+    if (this.password != validatedPassword) throw CommonError(
+        message: "The passwords do not match"
+    );
+    this.passwordConfirmation = validatedPassword;
+  }
+
   bool validateEmail(String email) {
     return RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+"
@@ -49,7 +60,14 @@ class SignUpFormModel {
   }
 
   bool validateData() {
-    return this.email != null && this.password != null
-        && validateEmail(email) && validatePassword(password);
+    return this.firstName != null && this.lastName != null
+        && this.email != null && this.password != null
+        && validateEmail(email) && validatePassword(password)
+        && this.passwordConfirmation != null
+        && this.password == this.passwordConfirmation;
   }
+
+  // void submitSignUp() async {
+  //   await _authState.si
+  // }
 }

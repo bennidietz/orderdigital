@@ -1,10 +1,10 @@
-import 'package:forsat/network/classes/common_error.dart';
-import 'package:forsat/network/classes/common_error.dart';
+import 'package:forsat/network/classes/errors/common_error.dart';
+import 'package:forsat/network/state/auth_state.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class SignInFormModel {
 
-  //final AuthState _authState = Injector.get<AuthState>();
+  final AuthState _authState = Injector.get<AuthState>();
 
   String email;
   String password;
@@ -38,7 +38,10 @@ class SignInFormModel {
         && validateEmail(email) && validatePassword(password);
   }
 
-  signInUser() {
-    // authenticate
+  signInUser() async {
+    await _authState.signIn(email: this.email, password: this.password);
+    //10.0.2.2
+    //0.0.0.0
+    //192.168.2.133
   }
 }

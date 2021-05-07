@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forsat/network/models/sign_up_form_model.dart';
-import 'package:forsat/res/colors.dart';
+import 'package:forsat/network/models/auth/sign_in_form_model.dart';
 import 'package:forsat/res/colors.dart';
 import 'package:forsat/res/images.dart';
 import 'package:forsat/router/router_constants.dart';
@@ -27,9 +26,9 @@ class _SignInPageState extends State<SignInPage> {
         automaticallyImplyLeading: false,
       ),
       body: Injector(
-        inject: [Inject<SignUpFormModel>(() => SignUpFormModel())],
+        inject: [Inject<SignInFormModel>(() => SignInFormModel())],
         builder: (context) {
-          final _singletonSignInFormModel = RM.get<SignUpFormModel>();
+          final _singletonSignInFormModel = RM.get<SignInFormModel>();
           return Container(
             padding: EdgeInsets.all(16),
             child: ListView(
@@ -41,7 +40,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
                 buildSizedBox(20),
-                StateBuilder<SignUpFormModel>(
+                StateBuilder<SignInFormModel>(
                   builder: (context, signInFormModel) {
                     return TextFormField(
                       onChanged: (String email) {
@@ -67,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
                   },
                 ),
                 buildSizedBox(15),
-                StateBuilder<SignUpFormModel>(
+                StateBuilder<SignInFormModel>(
                   builder: (_, signFormModel) {
                     return TextFormField(
                       onChanged: (String password) {
@@ -100,6 +99,8 @@ class _SignInPageState extends State<SignInPage> {
                           showSnackbar(key: _key, message: "Data is invalid");
                         } else {
                           // login
+                          _singletonSignInFormModel.setState(
+                                  (state) => state.signInUser());
                         }
                       },
                       height: 55,
