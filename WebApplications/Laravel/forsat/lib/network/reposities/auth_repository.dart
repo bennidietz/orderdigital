@@ -1,4 +1,6 @@
+
 import 'package:flutter/foundation.dart';
+import 'package:forsat/network/forsat_api.dart';
 
 abstract class AuthRepository {
 
@@ -11,9 +13,11 @@ abstract class AuthRepository {
 
 class AuthReposityImpl implements AuthRepository {
   @override
-  Future signIn({String email, String password}) {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  Future signIn({String email, String password}) async {
+    var response = await ForsatAPI.dio
+        .post("/api/auth/login",
+        data: {"email": email, "password": password});
+    print(response);
   }
 
 }
