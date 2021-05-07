@@ -5,9 +5,11 @@ class QuestionsPage extends StatefulWidget {
   _QuestionsPageState createState() => _QuestionsPageState();
 }
 
-class _QuestionsPageState extends State<QuestionsPage> {
+class _QuestionsPageState extends State<QuestionsPage>
+    with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Questions Page"),
@@ -15,4 +17,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

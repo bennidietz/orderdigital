@@ -5,9 +5,11 @@ class AccountPage extends StatefulWidget {
   _AccountPageState createState() => _AccountPageState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _AccountPageState extends State<AccountPage>
+    with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Account Page"),
@@ -15,4 +17,7 @@ class _AccountPageState extends State<AccountPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

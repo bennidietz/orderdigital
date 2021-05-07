@@ -11,15 +11,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   PageController _pageController = PageController();
-  List<Widget> _screens = [
+  final List<Widget> _screens = [
     OpportunitiesPage(),
     QuestionsPage(),
     FavoritesPage(),
     AccountPage()
   ];
 
-  void _onItemTapped(int index) {
-    _pageController.jumpToPage(index);
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int itemIndex) {
+    _pageController.jumpToPage(itemIndex);
+  }
+
+  void _onPageChanged(int pageIndex) {
+    setState(() {
+      _selectedIndex = pageIndex;
+    });
   }
 
   @override
@@ -28,11 +36,13 @@ class _HomePageState extends State<HomePage> {
       body: PageView(
         children: _screens,
         controller: _pageController,
+        onPageChanged: _onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
         items: [
           BottomNavigationBarItem(
             label: "Opportunities",
