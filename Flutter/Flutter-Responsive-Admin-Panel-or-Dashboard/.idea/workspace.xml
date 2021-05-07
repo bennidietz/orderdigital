@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="524670f2-37ed-4e8f-b08b-a3bfa6e10546" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KotlinMultiplatform">
+    <allAvailableExecutables />
+  </component>
+  <component name="ProjectId" id="1sE0S7Te6lrJ79T0zAO7BxWGDFE" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/images" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/images" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="524670f2-37ed-4e8f-b08b-a3bfa6e10546" name="Default Changelist" comment="" />
+      <created>1620422438510</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1620422438510</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1750" height="318" key="GridCell.Tab.0.bottom" timestamp="1620424038756">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="318" key="GridCell.Tab.0.bottom/-52.-1080.1920.1080/0.0.1792.1120@0.0.1792.1120" timestamp="1620424038756" />
+    <state width="1750" height="318" key="GridCell.Tab.0.center" timestamp="1620424038755">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="318" key="GridCell.Tab.0.center/-52.-1080.1920.1080/0.0.1792.1120@0.0.1792.1120" timestamp="1620424038755" />
+    <state width="1750" height="318" key="GridCell.Tab.0.left" timestamp="1620424038754">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="318" key="GridCell.Tab.0.left/-52.-1080.1920.1080/0.0.1792.1120@0.0.1792.1120" timestamp="1620424038754" />
+    <state width="1750" height="318" key="GridCell.Tab.0.right" timestamp="1620424038755">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="318" key="GridCell.Tab.0.right/-52.-1080.1920.1080/0.0.1792.1120@0.0.1792.1120" timestamp="1620424038755" />
+    <state x="576" y="223" key="SettingsEditor" timestamp="1620422938427">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="576" y="223" key="SettingsEditor/-52.-1080.1920.1080/0.0.1792.1120@0.0.1792.1120" timestamp="1620422938427" />
+    <state x="588" y="315" width="673" height="490" key="find.popup" timestamp="1620423734851">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="588" y="315" width="673" height="490" key="find.popup/-52.-1080.1920.1080/0.0.1792.1120@0.0.1792.1120" timestamp="1620423734851" />
+    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup" timestamp="1620423730090">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup/-52.-1057.1920.1057/0.23.1792.1026@0.23.1792.1026" timestamp="1620422638171" />
+    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup/-52.-1080.1920.1080/0.0.1792.1120@0.0.1792.1120" timestamp="1620423730090" />
+  </component>
+</project>
