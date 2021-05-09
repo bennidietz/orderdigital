@@ -1,3 +1,4 @@
+import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -26,10 +27,11 @@ class ProfileCard extends StatelessWidget {
             "assets/images/christian_transparent.png",
             height: 38,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: defaultPadding/2),
-            child: Text("Christian Terbeck"),
-          ),
+          if(!Responsive.isMobile(context))
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding/2),
+              child: Text("Christian Terbeck"),
+            ),
           Icon(Icons.keyboard_arrow_down)
         ],
       ),
