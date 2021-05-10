@@ -166,7 +166,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (!_singletonSignUpFormModel.state.validateData()) {
                           showSnackbar(key: _key, message: "Data is invalid");
                         } else {
-                          // login
+                          _singletonSignUpFormModel.state.submitSignUp();
                         }
                       },
                       height: 55,

@@ -1,9 +1,10 @@
 import 'package:forsat/network/classes/errors/common_error.dart';
+import 'package:forsat/network/state/auth_state.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class SignUpFormModel {
 
-  //final AuthState _authState = Injector.get<AuthState>();
+  final AuthState _authState = Injector.get<AuthState>();
 
   String firstName;
   String lastName;
@@ -45,19 +46,14 @@ class SignUpFormModel {
     this.passwordConfirmation = validatedPassword;
   }
 
-  bool validateEmail(String email) {
-    return RegExp(
+  bool validateEmail(String email)
+    => RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+"
     ).hasMatch(email);
-  }
 
-  bool validatePassword(String password) {
-    return password.length > 6;
-  }
+  bool validatePassword(String password) => password.length > 6;
 
-  bool validateName(String name) {
-    return name.length > 2;
-  }
+  bool validateName(String name) => name.length > 2;
 
   bool validateData() {
     return this.firstName != null && this.lastName != null
@@ -67,7 +63,13 @@ class SignUpFormModel {
         && this.password == this.passwordConfirmation;
   }
 
-  // void submitSignUp() async {
-  //   await _authState.si
-  // }
+  submitSignUp() async {
+    await _authState.signUp(
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      password: this.password,
+      passwordConfirmation: this.passwordConfirmation
+    );
+  }
 }

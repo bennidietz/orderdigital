@@ -23,20 +23,16 @@ class SignInFormModel {
     this.password = password;
   }
 
-  bool validateEmail(String email) {
-    return RegExp(
+  bool validateEmail(String email)
+    => RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+"
     ).hasMatch(email);
-  }
 
-  bool validatePassword(String password) {
-    return password.length > 6;
-  }
+  bool validatePassword(String password) => password.length > 6;
 
-  bool validateData() {
-    return this.email != null && this.password != null
+  bool validateData()
+    => this.email != null && this.password != null
         && validateEmail(email) && validatePassword(password);
-  }
 
   signInUser() async {
     await _authState.signIn(email: this.email, password: this.password);
