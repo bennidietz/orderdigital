@@ -34,8 +34,8 @@ class SignInFormModel {
     => this.email != null && this.password != null
         && validateEmail(email) && validatePassword(password);
 
-  signInUser() async {
-    await _authState.signIn(email: this.email, password: this.password);
+  Future<void> signInUser() async {
+    return await _authState.signIn(email: this.email, password: this.password);
     //10.0.2.2
     //0.0.0.0
     //192.168.2.133

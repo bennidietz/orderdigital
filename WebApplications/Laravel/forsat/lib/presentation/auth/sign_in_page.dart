@@ -100,7 +100,10 @@ class _SignInPageState extends State<SignInPage> {
                           showSnackbar(key: _key, message: "Please match the criteria of all froms");
                         } else {
                           _singletonSignInFormModel.setState(
-                            (state) => state.signInUser(),
+                            (state) async {
+                              await state.signInUser();
+                              Navigator.pushReplacementNamed(context, homeRoute);
+                            },
                             onError: (context, error)
                               => showSnackbar(
                                   color: Colors.red,

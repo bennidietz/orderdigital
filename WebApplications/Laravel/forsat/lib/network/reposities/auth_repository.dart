@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:forsat/network/classes/errors/common_error.dart';
 import 'package:forsat/network/forsat_api.dart';
+import 'package:forsat/network/storage/local_storage.dart';
+import 'package:forsat/network/storage/storage_keys.dart';
 
 abstract class AuthRepository {
 
@@ -28,7 +30,11 @@ class AuthReposityImpl implements AuthRepository {
       var response = await ForsatAPI.dio
           .post("/api/auth/login",
           data: {"email": email, "password": password});
-      print(response);
+      String accessToken = response.data['accessToken'];
+      String expiresAt = response.data['expiresAt'];
+      await LocalStorage.setItem(TOKEN, accessToken);
+      await LocalStorage.setItem(TOKEN_EXPIRATION, expiresAt);
+      return;
     } on DioError catch (e) {
       showNetworkError(e);
     }
