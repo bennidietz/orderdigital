@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:forsat/network/classes/errors/common_error.dart';
 import 'package:forsat/network/forsat_api.dart';
 
 abstract class AuthRepository {
@@ -23,10 +24,14 @@ abstract class AuthRepository {
 class AuthReposityImpl implements AuthRepository {
   @override
   Future signIn({String email, String password}) async {
-    var response = await ForsatAPI.dio
-      .post("/api/auth/login",
-        data: {"email": email, "password": password});
-    print(response);
+    try {
+      var response = await ForsatAPI.dio
+          .post("/api/auth/login",
+          data: {"email": email, "password": password});
+      print(response);
+    } on DioError catch (e) {
+      showNetworkError(e);
+    }
   }
 
   @override

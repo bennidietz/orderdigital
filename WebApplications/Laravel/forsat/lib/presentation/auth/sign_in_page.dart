@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsat/network/classes/errors/common_error.dart';
 import 'package:forsat/network/models/auth/sign_in_form_model.dart';
 import 'package:forsat/res/colors.dart';
 import 'package:forsat/res/images.dart';
@@ -96,11 +97,17 @@ class _SignInPageState extends State<SignInPage> {
                     return MaterialButton(
                       onPressed: () {
                         if (!_singletonSignInFormModel.state.validateData()) {
-                          showSnackbar(key: _key, message: "Data is invalid");
+                          showSnackbar(key: _key, message: "Please match the criteria of all froms");
                         } else {
-                          // login
                           _singletonSignInFormModel.setState(
-                                  (state) => state.signInUser());
+                            (state) => state.signInUser(),
+                            onError: (context, error)
+                              => showSnackbar(
+                                  color: Colors.red,
+                                  key: _key,
+                                  message: (error as CommonError).message
+                              )
+                          );
                         }
                       },
                       height: 55,

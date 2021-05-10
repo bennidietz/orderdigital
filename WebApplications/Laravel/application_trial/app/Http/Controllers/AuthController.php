@@ -6,6 +6,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -31,18 +32,22 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email:rfc|string|max:255',
             'password' => 'required|string|max:255',
         ]);
 
         $credentials = \request(['email', 'password']);
 
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()], 422);
+        }
+
         if (Auth::attempt($credentials)) {
             $user = $request->user();
             return $this->getResponse($user);
         } else {
-            return response(["error" => "error"], 400);
+            return response("Invalid Credentials", 401);
         }
     }
 

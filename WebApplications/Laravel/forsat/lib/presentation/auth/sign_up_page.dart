@@ -164,9 +164,21 @@ class _SignUpPageState extends State<SignUpPage> {
                     return MaterialButton(
                       onPressed: () {
                         if (!_singletonSignUpFormModel.state.validateData()) {
-                          showSnackbar(key: _key, message: "Data is invalid");
+                          showSnackbar(
+                            color: Colors.red,
+                            key: _key,
+                            message: "Please match the criteria of all froms"
+                          );
                         } else {
-                          _singletonSignUpFormModel.state.submitSignUp();
+                          _singletonSignUpFormModel.setState(
+                                  (state) => state.submitSignUp(),
+                              onError: (context, error)
+                              => showSnackbar(
+                                  color: Colors.red,
+                                  key: _key,
+                                  message: error.message
+                              )
+                          );
                         }
                       },
                       height: 55,
