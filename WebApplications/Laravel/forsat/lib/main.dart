@@ -10,9 +10,9 @@ import 'package:forsat/router/router.dart' as my_router;
 import 'package:forsat/router/router_constants.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ensure the app is initialized
-  LocalStorage.initializeSharedPreferences();
+  await LocalStorage.initializeSharedPreferences();
   runApp(Forsat());
 }
 
