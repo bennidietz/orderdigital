@@ -5,7 +5,8 @@ class LocalStorage {
 
   static LocalStorage _singleton = new LocalStorage._internal();
 
-  // factory of LocalStorage
+  factory LocalStorage() => _singleton;
+
   LocalStorage._internal() {
     initializeSharedPreferences();
   }
@@ -18,6 +19,6 @@ class LocalStorage {
     => _sharedPreferences.setString(key, value);
 
   static String getItem(String key) {
-    return _sharedPreferences.getString(key);
+    return _sharedPreferences?.getString(key);
   }
 }

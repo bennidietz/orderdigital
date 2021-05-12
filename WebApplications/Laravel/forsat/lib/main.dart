@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:forsat/network/reposities/auth_repository.dart';
+import 'package:forsat/network/reposities/opportunity_repository.dart';
 import 'package:forsat/network/state/auth_state.dart';
+import 'package:forsat/network/state/opportunity_state.dart';
 import 'package:forsat/network/storage/local_storage.dart';
 import 'package:forsat/network/storage/storage_keys.dart';
 import 'package:forsat/res/colors.dart';
@@ -20,7 +22,9 @@ class Forsat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Injector(
         inject: [
-          Inject<AuthState>(() => AuthState(AuthReposityImpl()))
+          // lazy instantialtion -> instantiated once used for the first time
+          Inject<AuthState>(() => AuthState(AuthReposityImpl())),
+          Inject<OpportunityState>(() => OpportunityState(OpportunityRepositoryImpl())),
         ],
         builder: (context) {
           return MaterialApp(

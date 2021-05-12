@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:forsat/network/state/opportunity_state.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
 class OpportunitiesPage extends StatefulWidget {
   @override
@@ -7,6 +9,17 @@ class OpportunitiesPage extends StatefulWidget {
 
 class _OpportunitiesPageState extends State<OpportunitiesPage>
     with AutomaticKeepAliveClientMixin{
+
+  final _opportunitiesStateRM = Injector.getAsReactive<OpportunityState>();
+
+  @override
+  void initState() {
+    _opportunitiesStateRM.setState((opportunityState)
+      => opportunityState.getAllOpportunities()
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -15,6 +28,18 @@ class _OpportunitiesPageState extends State<OpportunitiesPage>
         centerTitle: true,
         title: Text(
           "Opportunities Page",
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: StateBuilder(
+          observe: () => _opportunitiesStateRM,
+          builder: (_, model) {
+            return Column(
+              children: [
+
+              ],
+            );
+          },
         ),
       ),
     );
