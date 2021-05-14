@@ -2,7 +2,6 @@
 
 namespace Database\Factories\Models;
 
-use App\Models\Models\Opportunity;
 use App\Models\Models\OpportunityDetail;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

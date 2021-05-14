@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:forsat/network/state/opportunity_state.dart';
 import 'package:forsat/res/images.dart';
+import 'package:forsat/router/router_constants.dart';
+import 'package:forsat/widgets/opportunity_links_banner.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class OpportunitiesPage extends StatefulWidget {
@@ -41,14 +43,6 @@ class _OpportunitiesPageState extends State<OpportunitiesPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-    TextStyle _iconTextStyle = TextStyle(
-      fontFamily: 'Dosis',
-      fontSize: 14,
-      fontWeight: FontWeight.w600
-    );
-    double _iconSize = 20;
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -64,68 +58,33 @@ class _OpportunitiesPageState extends State<OpportunitiesPage>
             return Column(
               children: [
                 ...model.state.opportunities.map(
-                  (opportunity) => Column(
-                    children: [
-                      Image.asset(MyImages.test_image),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 13, vertical: 5),
-                        child: Text(
-                          "${opportunity.title}",
-                          style: TextStyle(
-                            fontFamily: 'IndieFlower',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500
+                  (opportunity) => GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, opportunityDetailsRoute,
+                          arguments: opportunity
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Image.asset(MyImages.test_image),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 13, vertical: 5),
+                          child: Text(
+                            "${opportunity.title}",
+                            style: TextStyle(
+                              fontFamily: 'IndieFlower',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(Icons.school, size: _iconSize,),
-                                  SizedBox(width: 5,),
-                                  Text("${opportunity.category.name}", style: _iconTextStyle)
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.remove_red_eye, size: _iconSize,),
-                                SizedBox(width: 5,),
-                                Text("${opportunity.id}", style: _iconTextStyle)
-                              ],
-                            ),
-                            TextButton(
-                              onPressed: () {
-
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(Icons.share, size: _iconSize,),
-                                  SizedBox(width: 5,),
-                                  Text("Share", style: _iconTextStyle)
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.event, size: _iconSize,),
-                                SizedBox(width: 5,),
-                                Text("${opportunity.deadline}", style: _iconTextStyle)
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                ))
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: OpportunityLinksBanner(opportunity: opportunity,)
+                        )
+                      ],
+                ),
+                  ))
               ],
             );
           },
