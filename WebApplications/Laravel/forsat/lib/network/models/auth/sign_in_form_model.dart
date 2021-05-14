@@ -32,7 +32,7 @@ class SignInFormModel {
 
   bool validateData()
     => this.email != null && this.password != null
-        && validateEmail(email) && validatePassword(password);
+      && validateEmail(email) && validatePassword(password);
 
   Future<void> signInUser() async {
     return await _authState.signIn(email: this.email, password: this.password);

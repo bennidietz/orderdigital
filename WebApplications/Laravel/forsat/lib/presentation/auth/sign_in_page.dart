@@ -97,7 +97,7 @@ class _SignInPageState extends State<SignInPage> {
                     return MaterialButton(
                       onPressed: () {
                         if (!_singletonSignInFormModel.state.validateData()) {
-                          showSnackbar(key: _key, message: "Please match the criteria of all froms");
+                          showSnackbar(key: _key, message: "Please match the criteria of all forms");
                         } else {
                           _singletonSignInFormModel.setState(
                             (state) async {
