@@ -18,15 +18,18 @@ class _OpportunitiesPageState extends State<OpportunitiesPage>
   ScrollController _scrollController;
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     _scrollController = ScrollController();
+    _getNewOpportunities();
     _scrollController.addListener(() {
 
     });
+    super.didChangeDependencies();
+  }
+
+  void _getNewOpportunities() {
     _opportunitiesStateRM.setState((opportunityState)
-      => opportunityState.getAllOpportunities()
-    );
-    super.initState();
+      => opportunityState.getAllOpportunities());
   }
 
   @override

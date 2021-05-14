@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:forsat/network/reposities/auth_repository.dart';
+import 'package:forsat/network/repositories/auth_repository.dart';
 
 class AuthState {
   final AuthRepository _authRepository;

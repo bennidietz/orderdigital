@@ -1,7 +1,7 @@
 import 'package:forsat/network/classes/common/pagination.dart';
 import 'package:forsat/network/classes/opportunity/opportunities.dart';
 import 'package:forsat/network/classes/opportunity/opportunity.dart';
-import 'package:forsat/network/reposities/opportunity_repository.dart';
+import 'package:forsat/network/repositories/opportunity_repository.dart';
 
 class OpportunityState {
   final OpportunityRepository _opportunityRepository;

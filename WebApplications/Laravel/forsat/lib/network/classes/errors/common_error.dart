@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 class CommonError extends Error {
   final String message;
 
-  CommonError(this.message);
+  CommonError({this.message});
 }
 
 CommonError showNetworkError(DioError networkError) {
