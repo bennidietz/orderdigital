@@ -22,7 +22,13 @@ class _OpportunitiesPageState extends State<OpportunitiesPage>
     _scrollController = ScrollController();
     _getNewOpportunities();
     _scrollController.addListener(() {
+      double _currentPosition = _scrollController.position.pixels;
+      double _maxScrollExtent = _scrollController.position.maxScrollExtent;
 
+      if (_currentPosition >= _maxScrollExtent &&
+          !_opportunitiesStateRM.state.loading) {
+        _getNewOpportunities();
+      }
     });
     super.didChangeDependencies();
   }
@@ -93,7 +99,7 @@ class _OpportunitiesPageState extends State<OpportunitiesPage>
                               children: [
                                 Icon(Icons.remove_red_eye, size: _iconSize,),
                                 SizedBox(width: 5,),
-                                Text("134", style: _iconTextStyle)
+                                Text("${opportunity.id}", style: _iconTextStyle)
                               ],
                             ),
                             TextButton(

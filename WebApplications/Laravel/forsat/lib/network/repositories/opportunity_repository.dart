@@ -10,14 +10,14 @@ import 'package:forsat/network/storage/storage_keys.dart';
 
 abstract class OpportunityRepository {
   // fetch the opportunities
-  Future<Opportunities> getAllOpportunities();
+  Future<Opportunities> getAllOpportunities(int page);
 }
 
 class OpportunityRepositoryImpl implements OpportunityRepository {
   @override
-  Future<Opportunities> getAllOpportunities() async{
+  Future<Opportunities> getAllOpportunities(int page) async{
     try {
-      final response = await ForsatAPI.dio.get('/api/opportunity',
+      final response = await ForsatAPI.dio.get('/api/opportunity?page=$page',
         options: Options(headers: {
           'Authorization': 'Bearer ${LocalStorage.getItem(TOKEN)}'
         })
