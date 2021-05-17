@@ -27,8 +27,8 @@ class Opportunity extends JsonResource
             'createdBy' => new User($this->user),
             'organizer' => $this->organizer,
             'opportunityDetails' => new OpportunityDetail($this->detail),
-            'createdAt' => new User($this->created_at->toDateTimeString()),
-            'updatedAt' => new User($this->created_at->toDateTimeString()),
+            //'createdAt' => new User($this->created_at->toDateTimeString()),
+            //'updatedAt' => new User($this->created_at->toDateTimeString()),
         ];
     }
 }

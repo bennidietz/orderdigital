@@ -12,33 +12,33 @@ class Opportunity extends Model
 {
     use HasFactory;
 
-    protected $casts= [
+    protected $casts = [
         'deadline' => 'datetime'
     ];
 
-    protected $fillable = [
+    protected $fillable  = [
         'title',
         'description',
-        'category_id',
-        'country_id',
-        'deadline',
-        'organizer',
-        'created_by',
-    ];
+        'category_id' ,
+        'country_id' ,
+        'deadline' ,
+        'organizer' ,
+        'created_by'];
 
-    public function detail() {
+    public function detail(){
         return $this->hasOne(OpportunityDetail::class);
     }
 
-    public function category() {
+
+    public function category(){
         return $this->belongsTo(Category::class);
     }
 
-    public function country() {
+    public function country(){
         return $this->belongsTo(Country::class);
     }
 
-    public function user() {
-        return $this->belongsTo(User::class, 'created_by');
+    public function user(){
+        return $this->belongsTo(User::class,'created_by');
     }
 }
