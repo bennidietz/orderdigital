@@ -21,14 +21,14 @@ class Opportunity extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'category' => new Category($this->category),
+            'category' => $this->category,
             'country' => new Country($this->country),
             'deadline' => $this->deadline->toFormattedDateString(),
-            'createdBy' => new User($this->user),
+            'createdBy' => $this->user,
             'organizer' => $this->organizer,
-            'opportunityDetails' => new OpportunityDetail($this->detail),
-            //'createdAt' => new User($this->created_at->toDateTimeString()),
-            //'updatedAt' => new User($this->created_at->toDateTimeString()),
+            'opportunityDetails' => $this->detail,
+            'createdAt' => $this->created_at->format("d.m.y H:i"),
+            'updatedAt' => $this->created_at->toDateTimeString(),
         ];
     }
 }
