@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forsat/network/classes/opportunity/opportunity.dart';
 import 'package:forsat/res/images.dart';
 import 'package:forsat/widgets/opportunity_links_banner.dart';
+import 'package:forsat/widgets/textstyles.dart';
 
 class OpportunityDetailsPage extends StatelessWidget {
   const OpportunityDetailsPage({Key key}) : super(key: key);
@@ -30,10 +31,29 @@ class OpportunityDetailsPage extends StatelessWidget {
             ),
             OpportunityLinksBanner(opportunity: opportunity),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(opportunity.opportunityDetail.benefits)
+                  TextParagraph(
+                    headline: "Benefits:",
+                    content: opportunity.opportunityDetail.benefits,
+                  ),
+                  SizedBox(height: 10,),
+                  TextParagraph(
+                    headline: "Application Process:",
+                    content: opportunity.opportunityDetail.applicationProcess,
+                  ),
+                  SizedBox(height: 10,),
+                  TextParagraph(
+                    headline: "Further Queries:",
+                    content: opportunity.opportunityDetail.furtherQueries,
+                  ),
+                  SizedBox(height: 10,),
+                  TextParagraph(
+                    headline: "Eligibilities:",
+                    content: opportunity.opportunityDetail.eligibilities,
+                  ),
                 ],
               ),
             )

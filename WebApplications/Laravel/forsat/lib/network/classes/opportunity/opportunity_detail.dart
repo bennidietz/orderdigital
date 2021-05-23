@@ -11,8 +11,8 @@ class OpportunityDetail {
 
   OpportunityDetail.fromJson(Map<String, dynamic> jsonMap):
       benefits = jsonMap['benefits'] ?? "",
-      applicationProcess = jsonMap['applicationProcess'] ?? "",
-      furtherQueries = jsonMap['furtherQueries'] ?? "",
+      applicationProcess = jsonMap['application_process'] ?? "",
+      furtherQueries = jsonMap['further_queries'] ?? "",
       eligibilities = jsonMap['eligibilities'] ?? "",
       startDate = jsonMap['startDate'] ?? "",
       endDate = jsonMap['endDate'] ?? "",

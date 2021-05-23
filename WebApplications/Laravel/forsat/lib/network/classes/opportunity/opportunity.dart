@@ -24,8 +24,8 @@ class Opportunity {
           : null,
       deadline = jsonMap['deadline'] ?? "",
       organizer = jsonMap['organizer'] ?? "",
-      opportunityDetail = jsonMap['opportunityDetail']!=null
-          ? OpportunityDetail.fromJson(jsonMap['opportunityDetail'])
+      opportunityDetail = jsonMap['opportunityDetails']!=null
+          ? OpportunityDetail.fromJson(jsonMap['opportunityDetails'])
           : null,
       createdAt = jsonMap['createdAt'] ?? "",
       updatedAt = jsonMap['updatedAt'] ?? "";
