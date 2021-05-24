@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommentCollection;
 use App\Models\Models\Comment;
+use App\Models\Models\Opportunity;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\Comment
      */
     public function index()
     {
-        //
+        return new \App\Http\Resources\Comment(Comment::all());
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OpportunityController;
@@ -46,6 +47,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Opportunities
     Route::resource('opportunity', OpportunityController::class);
+
+    // Comments
+    Route::resource('comment', CommentController::class);
 
     // Questions
     Route::get('questions', [QuestionController::class, 'index']);
