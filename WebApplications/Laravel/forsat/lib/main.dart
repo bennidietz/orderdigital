@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:forsat/network/repositories/forum_repository.dart';
 import 'package:forsat/network/state/auth_state.dart';
+import 'package:forsat/network/state/forum_state.dart';
 import 'package:forsat/network/state/opportunity_state.dart';
 import 'package:forsat/network/storage/local_storage.dart';
 import 'package:forsat/network/storage/storage_keys.dart';
@@ -26,6 +28,7 @@ class Forsat extends StatelessWidget {
           // lazy instantialtion -> instantiated once used for the first time
           Inject<AuthState>(() => AuthState(AuthReposityImpl())),
           Inject<OpportunityState>(() => OpportunityState(OpportunityRepositoryImpl())),
+          Inject<ForumState>(() => ForumState(ForumRepositoryImpl())),
         ],
         builder: (context) {
           return MaterialApp(
