@@ -50,6 +50,12 @@ class _OpportunitiesPageState extends State<OpportunitiesPage>
           "Opportunities Page",
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, addNewOpportunityRoute);
+        },
+        child: Icon(Icons.add),
+      ),
       body: SingleChildScrollView(
         controller: _scrollController,
         child: StateBuilder<OpportunityState>(

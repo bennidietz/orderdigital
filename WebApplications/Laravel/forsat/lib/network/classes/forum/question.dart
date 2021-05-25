@@ -12,7 +12,7 @@ class Question {
       comments = _getComments(jsonMap['comments']) ;
 
   static List<Comment> _getComments(List<dynamic> comments) {
-    if (comments == null) return [];
+    /*if (comments == null)*/ return [];
     return comments.map((e) => Comment.fromJson(e)).toList();
   }
 }

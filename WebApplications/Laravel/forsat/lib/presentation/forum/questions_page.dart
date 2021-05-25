@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forsat/network/state/forum_state.dart';
 import 'package:forsat/res/images.dart';
+import 'package:forsat/widgets/card_question.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class QuestionsPage extends StatefulWidget {
@@ -32,8 +33,8 @@ class _QuestionsPageState extends State<QuestionsPage>
   }
 
   void _getQuestions() {
-    _forumStateRM.setState((opportunityState)
-    => opportunityState.getAllQuestions());
+    _forumStateRM.setState((questionState)
+    => questionState.getAllQuestions());
   }
   
   @override
@@ -46,61 +47,34 @@ class _QuestionsPageState extends State<QuestionsPage>
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+        child: StateBuilder<ForumState>(
+          observe: () => _forumStateRM,
+          builder: (context, model) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundImage: AssetImage(MyImages.logo_solid),
-                        ),
-                        SizedBox(width: 10,),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Christian Terbeck",
-                                style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              Text("mail@mail.de"),
-                            ],
+                        ...model.state.questions.map((question) =>
+                          GestureDetector(
+                            onTap: () {
+
+                            },
+                            child: QuestionCard(question: question,)
                           )
                         ),
-                        Text("2 days ago")
                       ],
                     ),
-                    SizedBox(height: 10,),
-                    Text(
-                      "Dies ist irgendein längerer Text.",
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.w400
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 1,
-                      color: Colors.black26,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
+                  )
+                ],
+              ),
+            );
+          },
+        )
       ),
     );
   }
