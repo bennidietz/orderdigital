@@ -50,6 +50,7 @@ class _SignInPageState extends State<SignInPage> {
                           catchError: true
                         );
                       },
+                      obscureText: true,
                       decoration: InputDecoration(
                         errorText: signInFormModel.hasError
                           ? signInFormModel.error.message

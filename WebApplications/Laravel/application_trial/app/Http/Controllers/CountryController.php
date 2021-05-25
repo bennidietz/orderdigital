@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Lookups\CategoryCollection;
-use App\Models\Models\Loopups\Category;
+use App\Http\Resources\CountryCollection;
 use App\Models\Models\Loopups\Country;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -17,11 +16,11 @@ class CountryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return CategoryCollection
+     * @return CountryCollection
      */
     public function index()
     {
-        return new CategoryCollection(Category::all());
+        return new CountryCollection(Country::all());
     }
 
     /**
