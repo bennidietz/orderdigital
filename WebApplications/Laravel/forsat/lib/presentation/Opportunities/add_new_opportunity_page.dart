@@ -3,10 +3,13 @@ import 'package:forsat/network/classes/common/category.dart';
 import 'package:forsat/network/classes/common/country.dart';
 import 'package:forsat/network/classes/opportunity/form_fields/category_form_field.dart';
 import 'package:forsat/network/classes/opportunity/form_fields/country_form_field.dart';
+import 'package:forsat/network/classes/opportunity/form_fields/deadline_form_field.dart';
 import 'package:forsat/network/classes/opportunity/form_fields/description_form_field.dart';
+import 'package:forsat/network/classes/opportunity/form_fields/organizer_form_field.dart';
 import 'package:forsat/network/classes/opportunity/form_fields/title_form_field.dart';
 import 'package:forsat/network/repositories/common_repository.dart';
 import 'package:forsat/network/state/common_state.dart';
+import 'package:intl/intl.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class AddNewOpportunityPage extends StatelessWidget {
@@ -42,6 +45,10 @@ class _AddNewOpportunity extends StatelessWidget {
   final _descriptionRM = RM.create(DescriptionFormField(''));
   final _categoryRM = RM.create(CategoryFormField(null));
   final _countryRM = RM.create(CountryFormField(null));
+  final _deadlineRM = RM.create(DeadlineFormField(null));
+  final _organizerRM = RM.create(OrganizerFormField(''));
+
+  final _deadlineController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -166,6 +173,61 @@ class _AddNewOpportunity extends StatelessWidget {
                           child: Text(country.name)
                       )
                       ).toList(),
+                    );
+                  },
+                ),
+                SizedBox(height: 10,),
+                StateBuilder(
+                  observe: () => _deadlineRM,
+                  builder: (_, __) {
+                    return TextFormField(
+                      controller: _deadlineController,
+                      onTap: () async {
+                        DateTime _selectedDeadline = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(Duration(days: 600))
+                        );
+                        if (_selectedDeadline != null) {
+                          _deadlineController.text =
+                              DateFormat("yyyy-MM-dd").format(_selectedDeadline);
+                          _deadlineRM.setState((_)
+                            => DeadlineFormField(_selectedDeadline)..validate()
+                          );
+                        }
+                      },
+                      decoration: InputDecoration(
+                        errorText: _deadlineRM.hasError ? _deadlineRM.error.message : null,
+                        hintText: "Select deadline",
+                        suffixIcon: Icon(Icons.event),
+                        labelText: "Deadline",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(height: 10,),
+                StateBuilder(
+                  observe: () => _organizerRM,
+                  builder: (_, __) {
+                    return TextFormField(
+                      onChanged: (String organizer) {
+                        _organizerRM.setState(
+                                (_) => OrganizerFormField(organizer)..validate(),
+                            catchError: true
+                        );
+                      },
+                      decoration: InputDecoration(
+                        errorText: _organizerRM.hasError ? _organizerRM.error.message : null,
+                        hintText: "Enter organizer name",
+                        labelText: "Organizer",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
                     );
                   },
                 ),
