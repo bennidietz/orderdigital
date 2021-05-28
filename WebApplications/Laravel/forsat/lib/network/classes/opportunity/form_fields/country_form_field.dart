@@ -8,4 +8,8 @@ class CountryFormField {
   validate() {
 
   }
+
+  bool isValid() {
+    return country != null;
+  }
 }

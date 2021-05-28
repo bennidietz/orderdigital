@@ -7,8 +7,11 @@ import 'package:forsat/network/classes/opportunity/form_fields/deadline_form_fie
 import 'package:forsat/network/classes/opportunity/form_fields/description_form_field.dart';
 import 'package:forsat/network/classes/opportunity/form_fields/organizer_form_field.dart';
 import 'package:forsat/network/classes/opportunity/form_fields/title_form_field.dart';
+import 'package:forsat/network/classes/opportunity/opportunity_form_model.dart';
 import 'package:forsat/network/repositories/common_repository.dart';
 import 'package:forsat/network/state/common_state.dart';
+import 'package:forsat/network/state/opportunity_state.dart';
+import 'package:forsat/res/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -39,6 +42,7 @@ class _AddNewOpportunity extends StatelessWidget {
   _AddNewOpportunity({Key key}) : super(key: key);
 
   final _commonState = RM.get<CommonState>();
+  final _opportunityState = RM.get<OpportunityState>();
 
   // Form fields with default values
   final _titleRM = RM.create(TitleFormField(''));
@@ -49,6 +53,22 @@ class _AddNewOpportunity extends StatelessWidget {
   final _organizerRM = RM.create(OrganizerFormField(''));
 
   final _deadlineController = TextEditingController();
+
+  bool get isValid => _titleRM.hasData && _descriptionRM.hasData &&
+      _categoryRM.state.isValid() && _countryRM.state.isValid() &&
+      _deadlineRM.state.isValid() && _organizerRM.hasData;
+
+  Future _saveOpportunity() async {
+    final OpportunityFormModel _data = OpportunityFormModel(
+      title: _titleRM.state.title,
+      description: _descriptionRM.state.description,
+      category: _categoryRM.state.category,
+      country: _countryRM.state.country,
+      deadline: _deadlineRM.state.deadline,
+      organizer: _organizerRM.state.organizer,
+    );
+    await _opportunityState.setState((s) => s.saveOpportunity(_data));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -231,6 +251,37 @@ class _AddNewOpportunity extends StatelessWidget {
                     );
                   },
                 ),
+                SizedBox(height: 20,),
+                StateBuilder(
+                  observeMany: [
+                    () => _titleRM,
+                    () => _descriptionRM,
+                    () => _categoryRM,
+                    () => _countryRM,
+                    () => _deadlineRM,
+                    () => _organizerRM,
+                  ],
+                  builder: (_, __) {
+                    return MaterialButton(
+                      color: MyColors.primaryColor,
+                      disabledColor: MyColors.primaryColor,
+                      onPressed: isValid ? () {
+                        _saveOpportunity();
+                      } : null,
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      shape: OutlineInputBorder(
+                        borderSide: BorderSide.none
+                      ),
+                      child: Text(
+                        "Create Opportunity",
+                        style: TextStyle(
+                          color: isValid ? Colors.white : Colors.white70,
+                          fontSize: 20,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -239,4 +290,3 @@ class _AddNewOpportunity extends StatelessWidget {
     );
   }
 }
-

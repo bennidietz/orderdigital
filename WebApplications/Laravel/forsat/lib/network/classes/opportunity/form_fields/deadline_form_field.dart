@@ -8,4 +8,8 @@ class DeadlineFormField {
       throw Exception("Deadline is required");
     }
   }
+
+  bool isValid() {
+    return deadline != null;
+  }
 }

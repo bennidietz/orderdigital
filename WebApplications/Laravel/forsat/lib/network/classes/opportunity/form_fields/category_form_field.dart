@@ -8,4 +8,8 @@ class CategoryFormField {
   validate() {
 
   }
+
+  bool isValid() {
+    return category != null;
+  }
 }
