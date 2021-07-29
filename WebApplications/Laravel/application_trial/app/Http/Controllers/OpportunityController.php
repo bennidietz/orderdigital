@@ -21,7 +21,7 @@ class OpportunityController extends Controller
      */
     public function index()
     {
-        return new OpportunityCollection(Opportunity::paginate(10));
+        return new OpportunityCollection(Opportunity::orderBy('id', 'desc')->paginate(10));
     }
 
     /**

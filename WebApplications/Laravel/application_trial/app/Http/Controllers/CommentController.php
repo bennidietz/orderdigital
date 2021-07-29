@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CommentCollection;
 use App\Models\Models\Comment;
 use App\Models\Models\Opportunity;
 use Illuminate\Http\Request;
