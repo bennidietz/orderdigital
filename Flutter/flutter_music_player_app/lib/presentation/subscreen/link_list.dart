@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_player_app/network/model/journey.dart';
 import 'package:flutter_music_player_app/network/model/link.dart';
+import 'package:flutter_music_player_app/presentation/widgets/data_loading_text.dart';
 import 'package:flutter_music_player_app/presentation/widgets/dialogs/add_link_dialog.dart';
 import 'package:flutter_music_player_app/presentation/widgets/icon_fab.dart';
 import 'package:flutter_music_player_app/presentation/widgets/link_widget.dart';
-import 'package:flutter_music_player_app/utils/url_utils.dart';
 
 import '../../network/constants.dart';
 
 class LinkSubScreen extends StatefulWidget {
-  LinkSubScreen({Key? key, this.title}) : super(key: key);
+  LinkSubScreen({Key? key, this.title, this.myJourney}) : super(key: key);
+
+  final MyJourney? myJourney;
 
   final String? title;
 
@@ -37,13 +40,8 @@ class _LinkSubScreenState extends State<LinkSubScreen> {
                     children: [
                       SizedBox(height: defaultPadding,),
                       ...snapshot.data!.docs.map((snapshot) => LinkWidget(link: snapshot.data())),
-                      // ...LINKS.map((link) =>
-                      //     LinkWidget()
-                      // )
                     ]
-                ) : Center(
-                  child: Text("Daten werden geladen..."),
-                ),
+                ) : DataLoadingText(text: "Links werden geladen..."),
               ),
             ),
             floatingActionButton: IconFloatingActionButton(
@@ -53,8 +51,7 @@ class _LinkSubScreenState extends State<LinkSubScreen> {
                   return AddLinkDialog(
                     callback: () {
                       setState(() {
-
-                      downloadData();
+                        downloadData();
                       });
                     }
                   );

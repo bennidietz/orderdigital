@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_player_app/network/constants.dart';
+import 'package:flutter_music_player_app/network/model/journey.dart';
+import 'package:flutter_music_player_app/network/model/place.dart';
+import 'package:flutter_music_player_app/presentation/widgets/data_loading_text.dart';
 import 'package:flutter_music_player_app/presentation/widgets/dialogs/add_place_dialog.dart';
 import 'package:flutter_music_player_app/presentation/widgets/horizontal_divider.dart';
 import 'package:flutter_music_player_app/presentation/widgets/icon_fab.dart';
@@ -8,10 +12,12 @@ import 'package:flutter_music_player_app/presentation/widgets/list_element.dart'
 import 'package:flutter_music_player_app/router/router_constants.dart';
 
 class PlacesListSubScreen extends StatefulWidget {
-  PlacesListSubScreen({Key? key, this.title}) : super(key: key);
+  PlacesListSubScreen({Key? key, this.title, this.myJourney}) : super(key: key);
 
 
   final String? title;
+
+  final MyJourney? myJourney;
 
   @override
   _PlacesListSubScreenState createState() => _PlacesListSubScreenState();
@@ -19,36 +25,53 @@ class PlacesListSubScreen extends StatefulWidget {
 
 class _PlacesListSubScreenState extends State<PlacesListSubScreen> {
 
+  Future<QuerySnapshot<MyPlace>> downloadData() async{
+    return placeRef.where("id", isEqualTo: widget.myJourney!.id).get();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: defaultPadding / 2,),
-            ...places.map((myPlace) =>
-              Column(
-                children: [
-                  SizedBox(height: defaultPadding / 2,),
-                  MyPlaceListElement(
-                    place: myPlace,
-                    callback: () => Navigator.pushNamed(context, placeDetailRoute, arguments: myPlace),
-                  ),
-                  HorizontalDivider(),
-                ],
-              ),
+    return FutureBuilder<QuerySnapshot<MyPlace>>(
+        future: downloadData(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<MyPlace>> snapshot) {
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: (snapshot.data != null) ? Column(
+                  children: [
+                    SizedBox(height: defaultPadding / 2,),
+                    ...snapshot.data!.docs.map((myPlace) =>
+                    // ...places.map((myPlace) =>
+                        Column(
+                          children: [
+                            SizedBox(height: defaultPadding / 2,),
+                            MyPlaceListElement(
+                              place: myPlace.data(),
+                              callback: () => Navigator.pushNamed(context, placeDetailRoute, arguments: myPlace.data()),
+                            ),
+                            HorizontalDivider(),
+                          ],
+                        ),
+                    ),
+                  ]
+              ) : DataLoadingText(text: "Orte werden geladen..."),
             ),
-          ]
-        ),
-      ),
-      floatingActionButton: IconFloatingActionButton(
-        iconData: Icons.add,
-        callback: () {
-          showDialog(context: context, builder: (BuildContext context) {
-            return AddPlaceDialog();
-          });
-        },
-      ),
+            floatingActionButton: IconFloatingActionButton(
+              iconData: Icons.add,
+              callback: () {
+                if (widget.myJourney != null) {
+                  showDialog(context: context, builder: (BuildContext context) {
+                    return AddPlaceDialog(
+                      relatedJourney: widget.myJourney!,
+                      callback: () {
+
+                      },
+                    );
+                  });
+                }
+              },
+            ),
+          );
+        }
     );
   }
 }

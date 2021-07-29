@@ -20,7 +20,7 @@ class _DestinationDetailScreenState extends State<DestinationDetailScreen> with 
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: PLACE_PAGES.length, vsync: this);
+    tabController = TabController(length: PLACE_PAGES(null).length, vsync: this);
   }
 
   @override
@@ -80,7 +80,7 @@ class _DestinationDetailScreenState extends State<DestinationDetailScreen> with 
                 unselectedLabelColor: Colors.grey,
                 isScrollable: true,
                 tabs: <Widget>[
-                  ...PLACE_PAGES.map((page) =>
+                  ...PLACE_PAGES(myJourney).map((page) =>
                       Tab(
                         child: Text(page.title.toUpperCase(), style: TextStyle(
                             fontSize: 2 * SizeConfig.textMultiplier,
@@ -95,7 +95,7 @@ class _DestinationDetailScreenState extends State<DestinationDetailScreen> with 
               child: TabBarView(
                   controller: tabController,
                   children: <Widget>[
-                    ...PLACE_PAGES.map((place) => place.screen),
+                    ...PLACE_PAGES(myJourney).map((place) => place.screen),
                   ]),
             ),
           )

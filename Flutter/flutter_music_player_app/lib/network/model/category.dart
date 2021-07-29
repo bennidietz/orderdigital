@@ -9,8 +9,6 @@ class MyCategoryValues {
   MyCategoryValues(this.icon, this.name);
 }
 
-
-
 MyCategoryValues? getCategoryValues(MyCategory? place) {
   switch(place) {
     case  MyCategory.beach:

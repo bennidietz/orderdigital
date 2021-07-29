@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_music_player_app/network/model/journey.dart';
 import 'package:flutter_music_player_app/presentation/miniview/mini_map.dart';
 import 'package:flutter_music_player_app/presentation/subscreen/dream_travels_list.dart';
 import 'package:flutter_music_player_app/presentation/subscreen/ideas_list.dart';
@@ -14,11 +15,11 @@ class TabLayout {
   TabLayout(this.screen, this.title);
 }
 
-List<TabLayout> PLACE_PAGES = [
-  TabLayout(PlacesListSubScreen(), "Orte"),
-  TabLayout(PackListSubScreen(), "Packliste"),
-  TabLayout(IdeasSubScreen(), "Ideen"),
-  TabLayout(LinkSubScreen(), "Links"),
+List<TabLayout> PLACE_PAGES(MyJourney? myJourney) => [
+  TabLayout(PlacesListSubScreen(myJourney: myJourney,), "Orte"),
+  TabLayout(PackListSubScreen(myJourney: myJourney), "Packliste"),
+  TabLayout(IdeasSubScreen(myJourney: myJourney), "Ideen"),
+  TabLayout(LinkSubScreen(myJourney: myJourney), "Links"),
 ];
 
 List<TabLayout> SELECT_LOCATION_PAGES = [

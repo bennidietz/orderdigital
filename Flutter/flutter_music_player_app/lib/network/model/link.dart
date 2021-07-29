@@ -16,6 +16,7 @@ class Link {
 
   Map<String, Object?> toJson() {
     return {
+      'id' : id,
       'url': url,
       'description': description,
     };
@@ -27,7 +28,3 @@ final linkRef = FirebaseFirestore.instance.collection('travel_links').withConver
   fromFirestore: (snapshot, _) => Link.fromJson(snapshot.data()!),
   toFirestore: (movie, _) => movie.toJson(),
 );
-
-List<Link> LINKS = [
-  Link(url: "http://www.bvb.de", description: "Geilster Fußballverein der Welt")
-];

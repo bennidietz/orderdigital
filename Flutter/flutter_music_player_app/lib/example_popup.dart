@@ -42,7 +42,7 @@ class _ExamplePopupState extends State<ExamplePopup> {
             ),
             _cardDescription(context, place),
             IconButton(icon: Icon(Icons.navigation_outlined), onPressed: () =>
-                MapsLauncher.launchCoordinates(place.latlng.latitude, place.latlng.longitude)
+                MapsLauncher.launchCoordinates(place.latitude, place.longitude)
             )
           ],
         ),

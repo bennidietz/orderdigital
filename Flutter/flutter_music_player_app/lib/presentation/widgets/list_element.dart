@@ -63,7 +63,9 @@ class ListElement extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       (image_url != null) ?
-                      Image.asset(image_url!, height: img_size, width: img_size,) :
+                      ((image_url!.contains("http")) ?
+                      Image.network(image_url!, height: img_size, width: img_size,) :
+                      Image.asset(image_url!, height: img_size, width: img_size,)) :
                       (icon != null) ? Icon(icon, size: img_size,) :
                       (getCategoryValues(category)?.icon != null) ? Text(getCategoryValues(category)!.icon, style: TextStyle(fontSize: 35.0),) : SizedBox(width: 0,),
                       SizedBox(width: defaultPadding,),

@@ -92,7 +92,9 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
         iconData: Icons.add,
         callback: () {
           showDialog(context: context, builder: (BuildContext context) {
-            return AddJourneyDialog();
+            return AddJourneyDialog(callback: () {
+
+            },);
           });
         },
       ),

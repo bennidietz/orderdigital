@@ -1,11 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_player_app/network/model/category.dart';
+import 'package:flutter_music_player_app/network/model/journey.dart';
+import 'package:flutter_music_player_app/network/model/place.dart';
 import 'package:flutter_music_player_app/network/model/place_pages.dart';
 
 import '../../../SizeConfig.dart';
 import '../../../network/constants.dart';
 
 class AddPlaceDialog extends StatefulWidget {
-  AddPlaceDialog({Key? key}) : super(key: key);
+  AddPlaceDialog({Key? key, required this.callback, required this.relatedJourney}) : super(key: key);
+
+  final Function callback;
+
+  final MyJourney relatedJourney;
 
   @override
   _AddPlaceDialogState createState() => _AddPlaceDialogState();
@@ -88,6 +96,17 @@ class _AddPlaceDialogState extends State<AddPlaceDialog> with SingleTickerProvid
                     SizedBox(height: defaultPadding * 1.5,),
                     ElevatedButton(
                         onPressed: () {
+                          placeRef.add(
+                              MyPlace(
+                                  title: "Strand A",
+                                  description: "Weißer Stand",
+                                  journey_id: widget.relatedJourney.id,
+                                  latitude: 13.3,
+                                  longitude: 40.5,
+                                  //category: MyCategory.beach,
+                              )
+                          );
+                          widget.callback.call();
                           Navigator.pop(context);
                         },
                         child: Padding(
