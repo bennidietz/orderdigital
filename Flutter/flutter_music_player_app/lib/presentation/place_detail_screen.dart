@@ -110,7 +110,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> with SingleTicker
                             markerRotateAlignment:
                             PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
                             popupBuilder: (BuildContext context, Marker marker) =>
-                                ExamplePopup(marker),
+                                ExamplePopup(marker, [myPlace]),
                           ),
                         ),
                       ],

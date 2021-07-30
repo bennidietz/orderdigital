@@ -34,6 +34,7 @@ class _PlacesListSubScreenState extends State<PlacesListSubScreen> {
     return FutureBuilder<QuerySnapshot<MyPlace>>(
         future: downloadData(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<MyPlace>> snapshot) {
+          if (snapshot.data != null) GLOBAL_PLACES = snapshot.data!;
           return Scaffold(
             body: SingleChildScrollView(
               child: (snapshot.data == null) ?

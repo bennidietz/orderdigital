@@ -8,20 +8,25 @@ import 'network/model/place.dart';
 
 class ExamplePopup extends StatefulWidget {
   final Marker marker;
+  final List<MyPlace> myPlaces;
 
-  ExamplePopup(this.marker, {Key? key}) : super(key: key);
+  ExamplePopup(this.marker, this.myPlaces, {Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ExamplePopupState(marker);
+  State<StatefulWidget> createState() => _ExamplePopupState(marker, myPlaces);
 }
 
 class _ExamplePopupState extends State<ExamplePopup> {
   final Marker _marker;
 
+  final List<MyPlace> myPlaces;
+
  late MyPlace place;
 
-  _ExamplePopupState(this._marker) {
-    place = getPlaceForLatLng(this._marker.point)!;
+  _ExamplePopupState(this._marker, this.myPlaces) {
+    if (getPlaceForLatLng(this._marker.point, myPlaces) != null) {
+      place = getPlaceForLatLng(this._marker.point, myPlaces)!;
+    }
   }
 
   @override
@@ -34,7 +39,7 @@ class _ExamplePopupState extends State<ExamplePopup> {
             Padding(
               padding: EdgeInsets.only(left: 20, right: 10),
               child: Text(
-                CATEGORIES()[place.category_id]!.icon,
+                CATEGORIES()[place.category_id]?.icon ?? CATEGORIES()[OTHERS]!.icon,
                 style: TextStyle(
                   fontSize: 35.0,
                 ),

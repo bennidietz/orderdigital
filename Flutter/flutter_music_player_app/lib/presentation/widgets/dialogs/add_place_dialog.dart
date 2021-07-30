@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_music_player_app/network/model/category.dart';
 import 'package:flutter_music_player_app/network/model/formmodel/place_form_model.dart';
 import 'package:flutter_music_player_app/network/model/journey.dart';
 import 'package:flutter_music_player_app/network/model/place.dart';
 import 'package:flutter_music_player_app/network/model/place_pages.dart';
+import 'package:flutter_music_player_app/presentation/widgets/category_card_widget.dart';
 import 'package:flutter_music_player_app/presentation/widgets/data_loading_text.dart';
 import 'package:flutter_music_player_app/presentation/widgets/show_snackbar.dart';
 import 'package:latlong2/latlong.dart';
@@ -84,25 +86,48 @@ class _AddPlaceDialogState extends State<AddPlaceDialog> with SingleTickerProvid
                           ),
                           SizedBox(height: defaultPadding * 1.5,),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Card(
-                                child: InkWell(
-                                    splashColor: Colors.blue.withAlpha(30),
-                                    onTap: () {
-
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Row(
-                                        children: [
-                                          Text("Strand", style: TextStyle(fontSize: 15.0),),
-                                          SizedBox(width: 12.0,),
-                                          Text("Strand", style: TextStyle(fontSize: 15.0),),
-                                        ],
-                                      ),
-                                    )
-                                ),
-                              ),
+                              CategoryCardWidget(category_id: 'beach', activated: category_id == 'beach', callback: () {
+                                setState(() {
+                                  category_id = 'beach';
+                                });
+                              },),
+                              CategoryCardWidget(category_id: 'city', activated: category_id == 'city', callback: () {
+                                setState(() {
+                                  category_id = 'city';
+                                });
+                              },),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CategoryCardWidget(category_id: 'sight', activated: category_id == 'sight', callback: () {
+                                setState(() {
+                                  category_id = 'sight';
+                                });
+                              },),
+                              CategoryCardWidget(category_id: 'nature', activated: category_id == 'nature', callback: () {
+                                setState(() {
+                                  category_id = 'nature';
+                                });
+                              },),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CategoryCardWidget(category_id: 'adventure', activated: category_id == 'adventure', callback: () {
+                                setState(() {
+                                  category_id = 'adventure';
+                                });
+                              },),
+                              CategoryCardWidget(category_id: OTHERS, activated: category_id == OTHERS, callback: () {
+                                setState(() {
+                                  category_id = OTHERS;
+                                });
+                              },),
                             ],
                           ),
                           SizedBox(height: defaultPadding * 1.5,),

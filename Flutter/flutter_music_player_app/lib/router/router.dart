@@ -19,7 +19,8 @@ class Router {
         return MaterialPageRoute(settings: routeSettings,
             builder: (_) => DestinationDetailScreen());
       case mapRoute:
-        return MaterialPageRoute(builder: (_) => MyMap());
+        return MaterialPageRoute(settings: routeSettings,
+            builder: (_) => MyMap());
       case placeDetailRoute:
         return MaterialPageRoute(settings: routeSettings,
             builder: (_) => PlaceDetailScreen());

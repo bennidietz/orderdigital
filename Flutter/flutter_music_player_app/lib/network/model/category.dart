@@ -9,11 +9,13 @@ class MyCategoryValues {
   MyCategoryValues(this.icon, this.name);
 }
 
+final String OTHERS = 'others';
+
 Map<String, MyCategoryValues> CATEGORIES() => {
   'beach': MyCategoryValues("🏝", "Strand"),
   'city': MyCategoryValues("🌇", "Stadt"),
   'adventure': MyCategoryValues("⛵", "Abenteuer"),
   'nature': MyCategoryValues("🌺", "Natur"),
   'sight': MyCategoryValues("🗽️", "Sehenswürdigkeit"),
-  'others': MyCategoryValues("🗺", "Andere"),
+  OTHERS : MyCategoryValues("🗺", "Andere"),
 };

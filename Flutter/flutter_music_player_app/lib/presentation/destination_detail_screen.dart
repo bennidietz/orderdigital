@@ -42,7 +42,7 @@ class _DestinationDetailScreenState extends State<DestinationDetailScreen> with 
                   Card(
                     child: InkWell(
                       splashColor: Colors.blue.withAlpha(30),
-                      onTap: () => Navigator.pushNamed(context, mapRoute),
+                      onTap: () => Navigator.pushNamed(context, mapRoute, arguments: myJourney),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
