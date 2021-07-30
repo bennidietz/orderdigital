@@ -18,7 +18,7 @@ class PlannedJourneyScreen extends StatefulWidget {
 class _PlannedJourneyScreenState extends State<PlannedJourneyScreen> {
 
   Future<QuerySnapshot<MyJourney>> downloadData() async{
-    return journeyRef.get();
+    return journeyRef.where('date', isNotEqualTo: "false").get();
   }
 
   @override
