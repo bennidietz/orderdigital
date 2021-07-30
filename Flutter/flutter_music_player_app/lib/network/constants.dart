@@ -7,8 +7,8 @@ import 'model/place.dart';
 const double defaultPadding = 20.0;
 
 List<MyPlace> places = [
-  MyPlace(latitude: 14.621,longitude: -61.004, title: "Strand A", description: "Ein wunderschöner Stand mit tollem Sand und einer klasse Aussicht auf den Berg.", category: MyCategory.beach),
-  MyPlace(latitude: 14.60223686414459, longitude: -61.05680067315844,title: "Fort de France",description:  "Toller Hafen", category: MyCategory.city),
+  MyPlace(latitude: 14.621,longitude: -61.004, title: "Strand A", description: "Ein wunderschöner Stand mit tollem Sand und einer klasse Aussicht auf den Berg.", category_id: "beach"),
+  MyPlace(latitude: 14.60223686414459, longitude: -61.05680067315844,title: "Fort de France",description:  "Toller Hafen", category_id: "city"),
 ];
 
 List<MyJourney> journeys = [

@@ -23,7 +23,7 @@ class LinkSubScreen extends StatefulWidget {
 class _LinkSubScreenState extends State<LinkSubScreen> {
 
   Future<QuerySnapshot<Link>> downloadData() async{
-    return linkRef.get();
+    return linkRef.where("journey_id", isEqualTo: widget.myJourney!.id).get();
   }
 
   @override
@@ -36,26 +36,33 @@ class _LinkSubScreenState extends State<LinkSubScreen> {
               padding: const EdgeInsets.symmetric(
                   horizontal: defaultPadding * 1.5),
               child: SingleChildScrollView(
-                child: (snapshot.data != null) ? Column(
+                  child: (snapshot.data == null) ?
+                  DataLoadingText(text: "Links werden geladen...") :
+                  (snapshot.data!.docs.length == 0) ?
+                  DataLoadingText(text: "Es wurden noch keine Links gespeichert.") :
+                  Column(
                     children: [
                       SizedBox(height: defaultPadding,),
                       ...snapshot.data!.docs.map((snapshot) => LinkWidget(link: snapshot.data())),
                     ]
-                ) : DataLoadingText(text: "Links werden geladen..."),
+                ),
               ),
             ),
             floatingActionButton: IconFloatingActionButton(
               iconData: Icons.add,
               callback: () {
-                showDialog(context: context, builder: (BuildContext context) {
-                  return AddLinkDialog(
-                    callback: () {
-                      setState(() {
-                        downloadData();
-                      });
-                    }
-                  );
-                });
+                if (widget.myJourney != null) {
+                  showDialog(context: context, builder: (BuildContext context) {
+                    return AddLinkDialog(
+                      callback: () {
+                        setState(() {
+                          downloadData();
+                        });
+                      },
+                      relatedJourney: widget.myJourney!,
+                    );
+                  });
+                }
               },
             ),
           );

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
-import 'package:flutter_music_player_app/res/colors.dart';
 import 'package:latlong2/latlong.dart';
-
-import '../../example_popup.dart';
 
 class MiniMap extends StatefulWidget {
   MiniMap({
     Key? key,
     this.width = double.infinity,
-    this.height = double.infinity
+    this.height = double.infinity,
+    required this.latlngCallback,
   }) : super(key: key);
 
   final double height;
   final double width;
+  final Function(LatLng) latlngCallback;
 
   final PopupController _popupLayerController = PopupController();
 
@@ -77,7 +76,7 @@ class _MiniMapState extends State<MiniMap> {
               child: Icon(Icons.add),
               backgroundColor: Colors.blueAccent[700],
               onPressed: () {
-
+                widget.latlngCallback.call(latlang);
               },
             ),
         anchorPos: AnchorPos.align(AnchorAlign.top),

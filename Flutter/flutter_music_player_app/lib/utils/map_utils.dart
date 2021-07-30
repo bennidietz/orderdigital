@@ -26,7 +26,7 @@ class MapUtils {
         width: 40,
         height: 40,
         builder: (_) => Text(
-          getCategoryValues(place.category)!.icon,
+          CATEGORIES()[place.category_id]!.icon,
           style: TextStyle(
               fontSize: 30
           ),

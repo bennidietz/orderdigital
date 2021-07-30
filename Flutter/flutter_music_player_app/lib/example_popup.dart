@@ -34,7 +34,7 @@ class _ExamplePopupState extends State<ExamplePopup> {
             Padding(
               padding: EdgeInsets.only(left: 20, right: 10),
               child: Text(
-                getCategoryValues(place.category)!.icon,
+                CATEGORIES()[place.category_id]!.icon,
                 style: TextStyle(
                   fontSize: 35.0,
                 ),
@@ -71,7 +71,7 @@ class _ExamplePopupState extends State<ExamplePopup> {
             ),
             SizedBox(height: 2.0,),
             Text(
-              "(" + getCategoryValues(place.category)!.name + ")",
+              "(" + CATEGORIES()[place.category_id]!.name + ")",
               style: const TextStyle(
                   fontWeight: FontWeight.w300,
                   fontSize: 11.0

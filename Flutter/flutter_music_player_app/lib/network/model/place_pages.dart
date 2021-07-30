@@ -7,27 +7,34 @@ import 'package:flutter_music_player_app/presentation/subscreen/link_list.dart';
 import 'package:flutter_music_player_app/presentation/subscreen/pack_list.dart';
 import 'package:flutter_music_player_app/presentation/subscreen/places_list.dart';
 import 'package:flutter_music_player_app/presentation/subscreen/planned_journey_list.dart';
+import 'package:latlong2/latlong.dart';
 
 class TabLayout {
   final Widget screen;
   final String title;
 
-  TabLayout(this.screen, this.title);
+  TabLayout({
+    required this.screen,
+    required this.title,
+});
 }
 
 List<TabLayout> PLACE_PAGES(MyJourney? myJourney) => [
-  TabLayout(PlacesListSubScreen(myJourney: myJourney,), "Orte"),
-  TabLayout(PackListSubScreen(myJourney: myJourney), "Packliste"),
-  TabLayout(IdeasSubScreen(myJourney: myJourney), "Ideen"),
-  TabLayout(LinkSubScreen(myJourney: myJourney), "Links"),
+  TabLayout(screen: PlacesListSubScreen(myJourney: myJourney,), title: "Orte"),
+  TabLayout(screen: PackListSubScreen(myJourney: myJourney), title: "Packliste"),
+  TabLayout(screen: IdeasSubScreen(myJourney: myJourney), title: "Ideen"),
+  TabLayout(screen: LinkSubScreen(myJourney: myJourney), title: "Links"),
 ];
 
-List<TabLayout> SELECT_LOCATION_PAGES = [
-  TabLayout(MiniMap(height: 100,), "Karte"),
-  TabLayout(Text("Hallo"), "Adresse"),
+List<TabLayout> SELECT_LOCATION_PAGES(Function(LatLng) latlngCallback) => [
+  TabLayout(screen: MiniMap(
+    height: 100,
+    latlngCallback: latlngCallback,
+  ), title: "Karte"),
+  TabLayout(screen: Text("Hallo"), title: "Adresse"),
 ];
 
 List<TabLayout> DIFFERENT_JOUNEY_TYPES = [
-  TabLayout(PlannedJourneyScreen(), "Geplante Reise"),
-  TabLayout(DreamTravelsScreen(), "TRÄUME"),
+  TabLayout(screen: PlannedJourneyScreen(), title: "Geplante Reise"),
+  TabLayout(screen: DreamTravelsScreen(), title: "TRÄUME"),
 ];

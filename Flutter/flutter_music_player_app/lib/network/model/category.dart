@@ -9,15 +9,11 @@ class MyCategoryValues {
   MyCategoryValues(this.icon, this.name);
 }
 
-MyCategoryValues? getCategoryValues(MyCategory? place) {
-  switch(place) {
-    case  MyCategory.beach:
-      return MyCategoryValues("🏝", "Strand");
-    case MyCategory.city:
-      return MyCategoryValues("🌇", "Stadt");
-    case MyCategory.unknown:
-      return MyCategoryValues("X", "Unbekannt");
-    default:
-      return MyCategoryValues("X", "Unbekannt");
-  }
-}
+Map<String, MyCategoryValues> CATEGORIES() => {
+  'beach': MyCategoryValues("🏝", "Strand"),
+  'city': MyCategoryValues("🌇", "Stadt"),
+  'adventure': MyCategoryValues("⛵", "Abenteuer"),
+  'nature': MyCategoryValues("🌺", "Natur"),
+  'sight': MyCategoryValues("🗽️", "Sehenswürdigkeit"),
+  'others': MyCategoryValues("🗺", "Andere"),
+};

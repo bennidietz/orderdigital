@@ -9,7 +9,7 @@ class MyPlace {
   final double longitude;
   final String title;
   final String description;
-  final MyCategory? category;
+  final String category_id;
 
   MyPlace({
     this.journey_id,
@@ -18,7 +18,7 @@ class MyPlace {
     required this.longitude,
     required this.title,
     required this.description,
-    this.category
+    required this.category_id
   });
 
   MyPlace.fromJson(Map<String, Object?> json)
@@ -29,7 +29,7 @@ class MyPlace {
     longitude: json['longitude']! as double,
     title: json['title']! as String,
     description: json['description']! as String,
-    category: json['category'] as MyCategory?,
+    category_id: json['category_id'] as String,
   );
 
   Map<String, Object?> toJson() {
@@ -39,7 +39,7 @@ class MyPlace {
       'longitude': longitude,
       'title': title,
       'description': description,
-      'category': category,
+      'category_id': category_id,
     };
   }
 

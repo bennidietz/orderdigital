@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music_player_app/network/errors/common_error.dart';
 import 'package:flutter_music_player_app/network/model/formmodel/link_form_model.dart';
+import 'package:flutter_music_player_app/network/model/journey.dart';
 import 'package:flutter_music_player_app/network/model/link.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -9,9 +10,11 @@ import '../../../network/constants.dart';
 import '../show_snackbar.dart';
 
 class AddLinkDialog extends StatefulWidget {
-  AddLinkDialog({Key? key, required this.callback}) : super(key: key);
+  AddLinkDialog({Key? key, required this.callback, required this.relatedJourney}) : super(key: key);
 
   final Function callback;
+
+  final MyJourney relatedJourney;
 
   @override
   _AddLinkDialogState createState() => _AddLinkDialogState();
@@ -90,6 +93,7 @@ class _AddLinkDialogState extends State<AddLinkDialog> {
                                         Link(
                                             url: state.url!,
                                             description: state.description!,
+                                            journey_id: widget.relatedJourney.id,
                                         ),
                                       );
                                       widget.callback.call();

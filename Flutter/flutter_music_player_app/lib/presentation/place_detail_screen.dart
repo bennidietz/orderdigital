@@ -35,7 +35,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> with SingleTicker
   @override
   Widget build(BuildContext context) {
     final myPlace = ModalRoute.of(context)!.settings.arguments as MyPlace;
-    final categoryData = getCategoryValues(myPlace.category);
+    final categoryData = CATEGORIES()[myPlace.category_id];
 
     List<Marker> marker = MapUtils.getMarkers([myPlace]);
     if (marker.length > 0) _popupLayerController.showPopupFor(marker[0]);

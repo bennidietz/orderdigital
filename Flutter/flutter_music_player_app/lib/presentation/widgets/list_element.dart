@@ -16,7 +16,7 @@ class MyPlaceListElement extends StatelessWidget {
     return ListElement(
       title: place.title,
       description: place.description,
-      category: place.category,
+      category_id: place.category_id,
       callback: callback,
     );
   }
@@ -31,7 +31,7 @@ class ListElement extends StatelessWidget {
     this.image_url,
     this.icon,
     this.img_size = 100.0,
-    this.category,
+    this.category_id,
     required this.callback,
     this.showButton = true,
   }) : super(key: key);
@@ -41,7 +41,7 @@ class ListElement extends StatelessWidget {
   final String? image_url;
   final IconData? icon;
   final double img_size;
-  final MyCategory? category;
+  final String? category_id;
   final GestureTapCallback callback;
   final bool showButton;
 
@@ -50,6 +50,7 @@ class ListElement extends StatelessWidget {
     return InkWell(
       onTap: callback,
       child: Container(
+        width: double.infinity,
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +68,7 @@ class ListElement extends StatelessWidget {
                       Image.network(image_url!, height: img_size, width: img_size,) :
                       Image.asset(image_url!, height: img_size, width: img_size,)) :
                       (icon != null) ? Icon(icon, size: img_size,) :
-                      (getCategoryValues(category)?.icon != null) ? Text(getCategoryValues(category)!.icon, style: TextStyle(fontSize: 35.0),) : SizedBox(width: 0,),
+                      (CATEGORIES()[category_id]?.icon != null) ? Text(CATEGORIES()[category_id]!.icon, style: TextStyle(fontSize: 35.0),) : SizedBox(width: 0,),
                       SizedBox(width: defaultPadding,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
