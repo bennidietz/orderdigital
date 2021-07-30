@@ -44,6 +44,9 @@ class _IdeasSubScreenState extends State<IdeasSubScreen> {
                         MyCheckBox(
                           text: idea.data().text,
                           defaultState: idea.data().done,
+                          onChanged: (value) {
+                            ideasRef.doc(idea.id).update({'done': value});
+                          },
                         ),
                     ),
                   ]

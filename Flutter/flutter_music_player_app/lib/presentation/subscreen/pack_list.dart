@@ -47,6 +47,9 @@ class _PackListSubScreenState extends State<PackListSubScreen> {
                         MyCheckBox(
                           text: checkbox.data().text,
                           defaultState: checkbox.data().done,
+                          onChanged: (value) {
+                            luggageRef.doc(checkbox.id).update({'done': value});
+                          },
                         ),
                       ],
                     ),

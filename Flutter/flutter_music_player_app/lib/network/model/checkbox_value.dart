@@ -46,13 +46,6 @@ final ideasRef = FirebaseFirestore.instance.collection('travel_ideas').withConve
   toFirestore: (movie, _) => movie.toJson(),
 );
 
-// List<CheckboxValue> PACKLIST_VALUES = [
-//   CheckboxValue("Spikeball", true),
-//   CheckboxValue("Musikbox", false),
-//   CheckboxValue("Badesachen", true),
-//   CheckboxValue("Zahnpasta", false),
-// ];
-
 List<CheckboxValue> IDEAS_VALUES = [
   CheckboxValue(text: "Abends schwimmen gehen", done: false),
   CheckboxValue(text: "Tanzen", done: false),
