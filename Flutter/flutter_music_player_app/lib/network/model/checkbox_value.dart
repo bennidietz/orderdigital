@@ -1,18 +1,52 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class CheckboxValue {
+  final String? id;
+  final String? journey_id;
   final String text;
   final bool done;
 
-  CheckboxValue(this.text, this.done);
+  CheckboxValue({
+    this.id,
+    this.journey_id,
+    required this.text,
+    required this.done
+  });
+
+
+  CheckboxValue.fromJson(Map<String, Object?> json, String id)
+      : this(
+    id: id,
+    journey_id: json['journey_id']! as String,
+    text: json['text']! as String,
+    done: json['done']! as bool,
+  );
+
+  Map<String, Object?> toJson() {
+    return {
+      'id': id,
+      'journey_id': journey_id,
+      'text': text,
+      'done': done,
+    };
+  }
 }
 
-List<CheckboxValue> PACKLIST_VALUES = [
-  CheckboxValue("Spikeball", true),
-  CheckboxValue("Musikbox", false),
-  CheckboxValue("Badesachen", true),
-  CheckboxValue("Zahnpasta", false),
-];
+final luggageRef = FirebaseFirestore.instance.collection('travel_luggage').withConverter<CheckboxValue>(
+  fromFirestore: (snapshot, _) => CheckboxValue.fromJson(
+      snapshot.data()!, snapshot.id
+  ),
+  toFirestore: (movie, _) => movie.toJson(),
+);
+
+// List<CheckboxValue> PACKLIST_VALUES = [
+//   CheckboxValue("Spikeball", true),
+//   CheckboxValue("Musikbox", false),
+//   CheckboxValue("Badesachen", true),
+//   CheckboxValue("Zahnpasta", false),
+// ];
 
 List<CheckboxValue> IDEAS_VALUES = [
-  CheckboxValue("Abends schwimmen gehen", false),
-  CheckboxValue("Tanzen", false),
+  CheckboxValue(text: "Abends schwimmen gehen", done: false),
+  CheckboxValue(text: "Tanzen", done: false),
 ];

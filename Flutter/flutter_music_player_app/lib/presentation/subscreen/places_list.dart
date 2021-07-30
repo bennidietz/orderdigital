@@ -26,7 +26,7 @@ class PlacesListSubScreen extends StatefulWidget {
 class _PlacesListSubScreenState extends State<PlacesListSubScreen> {
 
   Future<QuerySnapshot<MyPlace>> downloadData() async{
-    return placeRef.where("id", isEqualTo: widget.myJourney!.id).get();
+    return placeRef.where("journey_id", isEqualTo: widget.myJourney!.id).get();
   }
 
   @override
@@ -36,24 +36,28 @@ class _PlacesListSubScreenState extends State<PlacesListSubScreen> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<MyPlace>> snapshot) {
           return Scaffold(
             body: SingleChildScrollView(
-              child: (snapshot.data != null) ? Column(
+              child: (snapshot.data == null) ?
+              DataLoadingText(text: "Orte werden geladen...") :
+              (snapshot.data!.docs.length == 0) ?
+              DataLoadingText(text: "Es wurden noch keine Orte gespeichert.") :
+              Column(
                   children: [
                     SizedBox(height: defaultPadding / 2,),
                     ...snapshot.data!.docs.map((myPlace) =>
                     // ...places.map((myPlace) =>
-                        Column(
-                          children: [
-                            SizedBox(height: defaultPadding / 2,),
-                            MyPlaceListElement(
-                              place: myPlace.data(),
-                              callback: () => Navigator.pushNamed(context, placeDetailRoute, arguments: myPlace.data()),
-                            ),
-                            HorizontalDivider(),
-                          ],
+                    Column(
+                      children: [
+                        SizedBox(height: defaultPadding / 2,),
+                        MyPlaceListElement(
+                          place: myPlace.data(),
+                          callback: () => Navigator.pushNamed(context, placeDetailRoute, arguments: myPlace.data()),
                         ),
+                        HorizontalDivider(),
+                      ],
+                    ),
                     ),
                   ]
-              ) : DataLoadingText(text: "Orte werden geladen..."),
+              ),
             ),
             floatingActionButton: IconFloatingActionButton(
               iconData: Icons.add,
@@ -63,7 +67,9 @@ class _PlacesListSubScreenState extends State<PlacesListSubScreen> {
                     return AddPlaceDialog(
                       relatedJourney: widget.myJourney!,
                       callback: () {
-
+                        setState(() {
+                          downloadData();
+                        });
                       },
                     );
                   });

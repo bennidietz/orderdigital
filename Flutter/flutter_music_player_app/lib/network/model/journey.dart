@@ -22,9 +22,9 @@ class MyJourney {
     required this.longitude,
   });
 
-  MyJourney.fromJson(Map<String, Object?> json)
+  MyJourney.fromJson(Map<String, Object?> json, String id)
       : this(
-    id: json['id'] as String?,
+    id: id,
     title: json['title']! as String,
     description: json['description']! as String,
     image_url: json['image_url']! as String,
@@ -48,6 +48,8 @@ class MyJourney {
 }
 
 final journeyRef = FirebaseFirestore.instance.collection('travel_journeys').withConverter<MyJourney>(
-  fromFirestore: (snapshot, _) => MyJourney.fromJson(snapshot.data()!),
+  fromFirestore: (snapshot, _) => MyJourney.fromJson(
+      snapshot.data()!, snapshot.id
+  ),
   toFirestore: (movie, _) => movie.toJson(),
 );
