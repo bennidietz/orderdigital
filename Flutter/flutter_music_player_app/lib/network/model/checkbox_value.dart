@@ -39,6 +39,13 @@ final luggageRef = FirebaseFirestore.instance.collection('travel_luggage').withC
   toFirestore: (movie, _) => movie.toJson(),
 );
 
+final ideasRef = FirebaseFirestore.instance.collection('travel_ideas').withConverter<CheckboxValue>(
+  fromFirestore: (snapshot, _) => CheckboxValue.fromJson(
+      snapshot.data()!, snapshot.id
+  ),
+  toFirestore: (movie, _) => movie.toJson(),
+);
+
 // List<CheckboxValue> PACKLIST_VALUES = [
 //   CheckboxValue("Spikeball", true),
 //   CheckboxValue("Musikbox", false),
