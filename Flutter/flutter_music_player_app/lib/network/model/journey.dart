@@ -5,7 +5,7 @@ class MyJourney {
   final String? id;
   final String title;
   final String description;
-  final String image_url;
+  final String? image_url;
   final String? date;
   final double latitude;
   final double longitude;
@@ -16,7 +16,7 @@ class MyJourney {
     this.id,
     required this.title,
     required this.description,
-    required this.image_url,
+    this.image_url,
     this.date,
     required this.latitude,
     required this.longitude,

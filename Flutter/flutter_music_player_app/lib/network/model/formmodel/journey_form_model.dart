@@ -1,20 +1,49 @@
 import 'package:flutter_music_player_app/network/errors/common_error.dart';
-import 'package:flutter_music_player_app/network/state/link_state.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
+import 'package:latlong2/latlong.dart';
 
 class JourneyFormModel {
 
-  String? text;
-  
+  String? title;
+  String? description;
+  String? date;
+  double? latitude;
+  double? longitude;
+  String? imageURL;
 
-  void setText(String text) {
-    if (!validateText(text)) throw CommonError(message: "Text darf nicht leer sein");
-    this.text = text;
+
+  void setTitle(String title) {
+    if (!validateText(title)) throw CommonError(message: "Text darf nicht leer sein");
+    this.title = title;
+  }
+
+  void setDescription(String description) {
+    if (!validateText(description)) throw CommonError(message: "Text darf nicht leer sein");
+    this.description = description;
+  }
+
+  void setDate(String date) {
+    if (!validateText(date)) throw CommonError(message: "Text darf nicht leer sein");
+    this.date = date;
+  }
+
+  setImageURL(String imageUrl) {
+    if (!_validURL(imageUrl)) throw CommonError(message: "Die URL vom Bild ist nicht valide");
+    this.imageURL = imageUrl;
+  }
+
+  bool _validURL(String url) => Uri.parse(url).isAbsolute;
+
+  void setLatlng(LatLng latLng) {
+    this.latitude = latLng.latitude;
+    this.longitude = latLng.longitude;
   }
 
   bool validateText(String text) => text.length > 0;
 
   bool validateData() {
-    return this.text != null && validateText(this.text!);
+    return this.title != null && validateText(this.title!) &&
+        this.description != null && validateText(this.description!) &&
+        this.latitude != null && this.longitude != null;
   }
+
 }
