@@ -28,7 +28,7 @@ class CategoryCard extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
               ),
-              SizedBox(height: 7.0),
+              Flexible(child: SizedBox(height: 7.0)),
               Text(
                 title,
                 style: TextStyle(
