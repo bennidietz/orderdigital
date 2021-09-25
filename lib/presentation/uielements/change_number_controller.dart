@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:orderdigital/presentation/uielements/round_icon_button.dart';
 import 'package:orderdigital/utils/constants.dart';
 
@@ -22,7 +21,7 @@ class _ChangeNumberControllerState extends State<ChangeNumberController> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         RoundIconButton(
-          icon: FontAwesomeIcons.minus,
+          icon: Icons.remove,
           iconColor: widget.number == 0 ? Colors.black12 : kColorPrimary,
           onPressed: () {
             setState(() {
@@ -44,7 +43,7 @@ class _ChangeNumberControllerState extends State<ChangeNumberController> {
           width: 10.0,
         ),
         RoundIconButton(
-          icon: FontAwesomeIcons.plus,
+          icon: Icons.add,
           onPressed: () {
             setState(() {
               widget.number++;
