@@ -27,13 +27,15 @@ class CategoriesGridView extends StatelessWidget {
                 ? 2
                 : 3,
         children: categories
-            .map((e) => CategoryCard(
-                  imageUrl: e.imageUrl,
-                  title: e.name,
-                  onTab: () => Navigator.pushNamed(
-                    context,
-                    kRouteCategoryDetails,
-                    arguments: e,
+            .map((e) => Flexible(
+                  child: CategoryCard(
+                    imageUrl: e.imageUrl,
+                    title: e.name,
+                    onTab: () => Navigator.pushNamed(
+                      context,
+                      kRouteCategoryDetails,
+                      arguments: e,
+                    ),
                   ),
                 ))
             .toList());
