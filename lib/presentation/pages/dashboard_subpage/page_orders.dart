@@ -20,17 +20,20 @@ class PageOrder extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  isMobile
-                      ? Column(
-                          children: children,
-                        )
-                      : Row(
-                          children: children,
-                        ),
-                  SizedBox(height: 15.0),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    isMobile
+                        ? Column(
+                            children: children,
+                          )
+                        : Row(
+                            children: children,
+                          ),
+                    SizedBox(height: 15.0),
+                  ],
+                ),
               ),
             ),
           ),
