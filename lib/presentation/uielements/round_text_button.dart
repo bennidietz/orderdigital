@@ -18,15 +18,14 @@ class RoundTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      child: Flexible(
-          child: Text(
+      child: Text(
         text,
         style: TextStyle(
           fontSize: 30.0,
           color: Colors.white,
           fontWeight: FontWeight.w900,
         ),
-      )),
+      ),
       onPressed: onPressed,
       shape: CircleBorder(),
       fillColor: iconColor,
