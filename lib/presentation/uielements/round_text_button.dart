@@ -27,6 +27,8 @@ class RoundTextButton extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
+      //shape: CircleBorder(),
+      fillColor: iconColor,
       constraints: BoxConstraints.tightFor(width: size, height: size),
       elevation: 6.0,
     );
