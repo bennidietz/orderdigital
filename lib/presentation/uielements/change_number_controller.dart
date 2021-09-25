@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orderdigital/presentation/uielements/round_icon_button.dart';
+import 'package:orderdigital/presentation/uielements/round_text_button.dart';
 import 'package:orderdigital/utils/constants.dart';
 
 class ChangeNumberController extends StatefulWidget {
@@ -20,8 +20,8 @@ class _ChangeNumberControllerState extends State<ChangeNumberController> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        RoundIconButton(
-          icon: Icons.remove,
+        RoundTextButton(
+          text: '-',
           iconColor: widget.number == 0 ? Colors.black12 : kColorPrimary,
           onPressed: () {
             setState(() {
@@ -42,8 +42,8 @@ class _ChangeNumberControllerState extends State<ChangeNumberController> {
         SizedBox(
           width: 10.0,
         ),
-        RoundIconButton(
-          icon: Icons.add,
+        RoundTextButton(
+          text: '+',
           onPressed: () {
             setState(() {
               widget.number++;
